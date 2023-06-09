@@ -3,7 +3,6 @@
 from flask import Flask, jsonify, request, url_for
 import os
 import requests
-import Updated_Api as up
 import json
 from datetime import datetime
 import requests
