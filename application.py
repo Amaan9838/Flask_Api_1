@@ -386,7 +386,7 @@ def reels():
          # video = YouTube(url,use_oauth=True, allow_oauth_cache=False)
       cut = target[-11:]
       url = "https://www.youtube.com/watch?v="+cut
-      video = YouTube(url)
+      video = YouTube(url,use_oauth=True,allow_oauth_cache=True)
 
 
         # streams1 = video.streams.all()
