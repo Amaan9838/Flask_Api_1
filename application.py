@@ -414,10 +414,10 @@ def reels():
       streams_144p_mp4 = video.streams.filter(progressive=False,res="144p",mime_type="video/mp4").first()
       streams_audio = video.streams.filter(progressive=False,mime_type="audio/mp4")
       
-      output_dir = 'downloads'
-      output_path = os.path.join(output_dir, f'{video.title[:3]}.mp4')
+      # output_dir = 'downloads'
+      # output_path = os.path.join(output_dir, f'{video.title[:3]}.mp4')
         
-      streams_720p_download.download(output_path)
+      # streams_720p_download.download(output_path)
         # print(streams_audio.first().url)
 
         # print(streams_2160p_mp4.first())
