@@ -1,4 +1,3 @@
-import pytube
 from pytube.innertube import InnerTube
 from pytube import YouTube
 
