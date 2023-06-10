@@ -6,8 +6,8 @@ import xml.etree.ElementTree as ElementTree
 from html import unescape
 from typing import Dict, Optional
 
-from pytube import request
-from pytube.helpers import safe_filename, target_directory
+from pytube_age import request
+from pytube_age.helpers import safe_filename, target_directory
 
 
 class Caption:
@@ -55,7 +55,7 @@ class Caption:
     def generate_srt_captions(self) -> str:
         """Generate "SubRip Subtitle" captions.
 
-        Takes the xml captions from :meth:`~pytube.Caption.xml_captions` and
+        Takes the xml captions from :meth:`~pytube_age.Caption.xml_captions` and
         recompiles them into the "SubRip Subtitle" format.
         """
         return self.xml_caption_to_srt(self.xml_captions)

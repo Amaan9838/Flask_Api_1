@@ -11,10 +11,10 @@ import datetime as dt
 import subprocess  # nosec
 from typing import List, Optional
 
-import pytube.exceptions as exceptions
-from pytube import __version__
-from pytube import CaptionQuery, Playlist, Stream, YouTube
-from pytube.helpers import safe_filename, setup_logger
+import pytube_age.exceptions as exceptions
+from pytube_age import __version__
+from pytube_age import CaptionQuery, Playlist, Stream, YouTube
+from pytube_age.helpers import safe_filename, setup_logger
 
 
 logger = logging.getLogger(__name__)
@@ -30,7 +30,7 @@ def main():
         if args.logfile:
             log_filename = args.logfile
         setup_logger(logging.DEBUG, log_filename=log_filename)
-        logger.debug(f'Pytube version: {__version__}')
+        logger.debug(f'pytube_age version: {__version__}')
 
     if not args.url or "youtu" not in args.url:
         parser.print_help()
@@ -44,7 +44,7 @@ def main():
         for youtube_video in playlist.videos:
             try:
                 _perform_args_on_youtube(youtube_video, args)
-            except exceptions.PytubeError as e:
+            except exceptions.pytube_ageError as e:
                 print(f"There was an error with video: {youtube_video}")
                 print(e)
     else:
@@ -109,7 +109,7 @@ def _parse_args(
         "--list",
         action="store_true",
         help=(
-            "The list option causes pytube cli to return a list of streams "
+            "The list option causes pytube_age cli to return a list of streams "
             "available to download"
         ),
     )

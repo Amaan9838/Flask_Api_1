@@ -5,8 +5,8 @@ from collections.abc import Sequence
 from datetime import date, datetime
 from typing import Dict, Iterable, List, Optional, Tuple, Union
 
-from pytube import extract, request, YouTube
-from pytube.helpers import cache, DeferredGeneratorList, install_proxy, uniqueify
+from pytube_age import extract, request, YouTube
+from pytube_age.helpers import cache, DeferredGeneratorList, install_proxy, uniqueify
 
 logger = logging.getLogger(__name__)
 
@@ -321,7 +321,7 @@ class Playlist(Sequence):
 
         For some playlists, this will be a specific date, which is returned as a datetime
         object. For other playlists, this is an estimate such as "1 week ago". Due to the
-        fact that this value is returned as a string, pytube does a best-effort parsing
+        fact that this value is returned as a string, pytube_age does a best-effort parsing
         where possible, and returns the raw string where it is not possible.
 
         :return: Date of last playlist update where possible, else the string provided

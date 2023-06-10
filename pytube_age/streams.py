@@ -2,7 +2,7 @@
 This module contains a container for stream manifest data.
 
 A container object for the media stream (video only / audio only / video+audio
-combined). This was referred to as ``Video`` in the legacy pytube version, but
+combined). This was referred to as ``Video`` in the legacy pytube_age version, but
 has been renamed to accommodate DASH (which serves the audio and video
 separately).
 """
@@ -15,10 +15,10 @@ from typing import BinaryIO, Dict, Optional, Tuple
 from urllib.error import HTTPError
 from urllib.parse import parse_qs
 
-from pytube import extract, request
-from pytube.helpers import safe_filename, target_directory
-from pytube.itags import get_format_profile
-from pytube.monostate import Monostate
+from pytube_age import extract, request
+from pytube_age.helpers import safe_filename, target_directory
+from pytube_age.itags import get_format_profile
+from pytube_age.monostate import Monostate
 
 logger = logging.getLogger(__name__)
 

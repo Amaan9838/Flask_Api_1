@@ -1,4 +1,4 @@
-"""Various helper functions implemented by pytube."""
+"""Various helper functions implemented by pytube_age."""
 import functools
 import gzip
 import json
@@ -9,7 +9,7 @@ import warnings
 from typing import Any, Callable, Dict, List, Optional, TypeVar
 from urllib import request
 
-from pytube.exceptions import RegexMatchError
+from pytube_age.exceptions import RegexMatchError
 
 logger = logging.getLogger(__name__)
 
@@ -187,8 +187,8 @@ def setup_logger(level: int = logging.ERROR, log_filename: Optional[str] = None)
     date_fmt = "%H:%M:%S"
     formatter = logging.Formatter(fmt, datefmt=date_fmt)
 
-    # https://github.com/pytube/pytube/issues/163
-    logger = logging.getLogger("pytube")
+    # https://github.com/pytube_age/pytube_age/issues/163
+    logger = logging.getLogger("pytube_age")
     logger.setLevel(level)
 
     stream_handler = logging.StreamHandler()
@@ -306,10 +306,10 @@ def create_mock_html_json(vid_id) -> Dict[str, Any]:
     :return dict data
         Dict used to generate the json.gz file
     """
-    from pytube import YouTube
+    from pytube_age import YouTube
     gzip_filename = 'yt-video-%s-html.json.gz' % vid_id
 
-    # Get the pytube directory in order to navigate to /tests/mocks
+    # Get the pytube_age directory in order to navigate to /tests/mocks
     pytube_dir_path = os.path.abspath(
         os.path.join(
             os.path.dirname(__file__),

@@ -3,8 +3,8 @@
 import logging
 
 # Local imports
-from pytube import YouTube
-from pytube.innertube import InnerTube
+from pytube_age import YouTube
+from pytube_age.innertube import InnerTube
 
 
 logger = logging.getLogger(__name__)
@@ -155,7 +155,7 @@ class Search:
                     logger.warning(f'Search term: {self.query}')
                     logger.warning(
                         'Please open an issue at '
-                        'https://github.com/pytube/pytube/issues '
+                        'https://github.com/pytube_age/pytube_age/issues '
                         'and provide this log output.'
                     )
                     continue
