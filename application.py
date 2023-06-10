@@ -385,8 +385,8 @@ def reels():
          # age restricted
          # url = "https://www.youtube.com/watch?v=OQPYLFUKnVc"
          # video = YouTube(url,use_oauth=True, allow_oauth_cache=False)
-      cut = target[-11:]
-      url = "https://www.youtube.com/watch?v="+cut
+      # cut = target[-11:]
+      url = target
       video = CustomYouTube(url)
       video.bypass_age_gate()
 
