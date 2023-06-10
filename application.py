@@ -8,7 +8,7 @@ from datetime import datetime
 import requests
 import youtube_dl
 import random 
-from pytube import YouTube
+from pytube_age import YouTube
 
 # creating a Flask app
 application= Flask(__name__)
