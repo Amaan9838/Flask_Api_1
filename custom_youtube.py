@@ -6,7 +6,7 @@ class CustomYouTube(YouTube):
         # Custom implementation for bypass_age_gate
         # Add your code here
          innertube = InnerTube(
-            client='ANDROID',
+            client='ANDROID_EMBED',
             use_oauth=self.use_oauth,
             allow_cache=self.allow_oauth_cache
         )
