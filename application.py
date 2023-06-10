@@ -387,7 +387,7 @@ def reels():
          # video = YouTube(url,use_oauth=True, allow_oauth_cache=False)
       cut = target[-11:]
       url = "https://www.youtube.com/watch?v="+cut
-      video = CustomYouTube(url)
+      video = CustomYouTube(url,proxies=proxyDict)
       video.bypass_age_gate()
 
 
