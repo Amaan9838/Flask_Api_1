@@ -389,31 +389,71 @@ def reels():
       url = target
       video = CustomYouTube(url)
       video.bypass_age_gate()
-
-
-        # streams1 = video.streams.all()
-        # duration = video.length
+      duration = video.length
       title = video.title
-            # print(streams1)
+      thumbnail = video.thumbnail_url
+      separator = "/"
 
-            # print(title)
+      thumbnail = thumbnail.split(separator, 5)[4]
+      if duration > 60  and duration <= 3600:
+         minute = (duration/60)
+         sec = round((minute%1)*60)
+         sec = str(sec)
+         if len(str(sec)) == 1:
+         # length = ":".join([le, nt])
+            minute = str(int(minute))
+            length = ":0".join([minute, sec])
+            # print(length)
+         else:    
+            minute = str(int(minute))
+            length = ":".join([minute, sec])
+            # print(length)
+      elif len(str(duration)) >= 4:
+         hr = (duration/60)/60
+         sec = round(((duration/60)%1)*60)
+         nt = round((hr%1)*60)
 
-      streams_720p = video.streams.filter(progressive=True,res="720p",audio_codec="mp4a.40.2").first().url
-      streams_720p_download = video.streams.filter(progressive=True,res="720p",audio_codec="mp4a.40.2").first()
+         # minute = nt*60
+         # minute = round(minute)
+         minute = str(nt)
+         sec = str(sec)
+         # length = ":".join([le, nt])
+         hr = str(int(hr))
+         # hr = str(hr)
+         # length = ":".join([hr, minute])
+         lengthh = ":".join([hr, minute])
+         length =  ":".join([lengthh, sec])
+         # print(length)
+      elif duration == 60:
+         length = duration/60
+         length = str(round(length))+":00" 
+      # elif duration > 60  and duration <= 99:
+      #     minute = duration/60
+      #     sec = round((minute%1)*60)
+      #     length = str(round(length))+":00"     
+      else:
+         length = "00:"+str(duration) 
+      streams_720p = video.streams.filter(progressive=True,res='720p',audio_codec="mp4a.40.2")
+      streams_720p_download = video.streams.filter(progressive=True,res='720p',audio_codec="mp4a.40.2")
 
-      streams_360p = video.streams.filter(progressive=True,res="360p",audio_codec="mp4a.40.2").first().url
-      streams_144p = video.streams.filter(progressive=True,res="144p",audio_codec="mp4a.40.2").first().url
+      streams_360p = video.streams.filter(progressive=True,res='360p',audio_codec="mp4a.40.2")
+      streams_144p = video.streams.filter(progressive=True,res='144p',audio_codec="mp4a.40.2")
 
-      streams_2160p_mp4 = video.streams.filter(progressive=False,res="2160p")
-      streams_1440p_mp4 = video.streams.filter(progressive=False,res="1440p")
-      streams_1080p_mp4 = video.streams.filter(progressive=False,res="1080p",mime_type="video/mp4")
-      streams_720p_mp4 = video.streams.filter(adaptive=True,res="720p",mime_type="video/mp4")
-      streams_480p_mp4 = video.streams.filter(progressive=False,res="480p",mime_type="video/mp4").first()
-      streams_360p_mp4 = video.streams.filter(adaptive=True,res="360p",mime_type="video/mp4").first()
-      streams_240p_mp4 = video.streams.filter(progressive=False,res="240p",mime_type="video/mp4").first()
-      streams_144p_mp4 = video.streams.filter(progressive=False,res="144p",mime_type="video/mp4").first()
-      streams_audio = video.streams.filter(progressive=False,mime_type="audio/mp4")
-      
+      streams_2160p_mp4 = video.streams.filter(progressive=False,res='2160p')
+      streams_1440p_mp4 = video.streams.filter(progressive=False,res='1440p')
+      streams_1080p_mp4 = video.streams.filter(progressive=False,res='1080p',mime_type='video/mp4')
+
+      streams_audio_mp4 = video.streams.filter(progressive=False,mime_type='audio/mp4')
+
+
+      streams_720p_mp4 = video.streams.filter(adaptive=True,res='720p',mime_type='video/mp4')
+      streams_480p_mp4 = video.streams.filter(progressive=False,res='480p',mime_type='video/mp4')
+      streams_360p_mp4 = video.streams.filter(adaptive=True,res='360p',mime_type='video/mp4')
+      streams_240p_mp4 = video.streams.filter(progressive=False,res='240p',mime_type='video/mp4')
+      streams_144p_mp4 = video.streams.filter(progressive=False,res='144p',mime_type='video/mp4')
+      streams_audio_128 = video.streams.filter(progressive=False,mime_type='audio/mp4', abr='128kbps')
+      streams_audio_48 = video.streams.filter(progressive=False,mime_type='audio/mp4', abr='48kbps')
+
       # output_dir = 'downloads'
       # output_path = os.path.join(output_dir, f'{video.title[:3]}.mp4')
         
@@ -430,265 +470,268 @@ def reels():
         #     video_adaptive_streams = video.streams.filter(progressive=False, res=resolution)
         #     print(video_adaptive_streams)
       if len(streams_2160p_mp4) > 0 :
-            meta = {
-                "adaptive_formats_mp4":{ 
-                    "0":{
-                        "quality": "2160p",
-                        "mime_type": "video/mp4",
-                        "url": streams_2160p_mp4.first().url,       
-                  }, 
-                    "1":{
-                        "quality": "1440p",
-                        "mime_type": "video/mp4",
-                        "url": streams_1440p_mp4.first().url,       
-                  },
-                    "2":{
-                        "quality": "1080p",
-                        "mime_type": "video/mp4",
-                        "url": streams_1080p_mp4.first().url,       
-                  },
-                     "3":{
-                        "quality": "720p",
-                        "mime_type": "video/mp4",
-                        "url": streams_720p_mp4.first().url,  
-                  },
-                    "4":{
-                        "quality": "480p",
-                        "mime_type": "video/mp4",
-                        "url": streams_480p_mp4.url,
-                  },
-                    "5":{
-                        "quality": "360p",
-                        "mime_type": "video/mp4",
-                        "url": streams_360p_mp4.url,
-                  },
-                    "6":{
-                        "quality": "240p",
-                        "mime_type": "video/mp4",
-                        "url": streams_240p_mp4.url,
-                  },
-                    "7":{
-                        "quality": "144p",
-                        "mime_type": "video/mp4",
-                        "url": streams_144p_mp4.url,
-                  },
+         meta = {
+                    'adaptive_formats_mp4':{ 
+                        '0':{
+                            'quality': '2160p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_2160p_mp4.first().url,       
+                    }, 
+                    '1':{
+                            'quality': '1440p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_1440p_mp4.first().url,       
+                    },
+                        '2':{
+                            'quality': '1080p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_1080p_mp4.first().url,       
+                    },
+                    '3':{
+                            'quality': '720p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_720p_mp4.first().url,  
+                    },
+                        '4':{
+                            'quality': '480p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_480p_mp4.first().url,
+                        },
+                        '5':{
+                            'quality': '360p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_360p_mp4.first().url,
+                        },
+                        '6':{
+                            'quality': '240p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_240p_mp4.first().url,
+                        },
+                        '7':{
+                            'quality': '144p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_144p_mp4.first().url,
+                        },
+                    },
+                    'formats':{
+                    '22':{
+                        'quality': '720p',
+                        'mime_type': 'video/mp4',
+                        'url': streams_720p.first().url,     
                 },
-                  "formats":{
-                     "22":{
-                        "quality": "720p",
-                        "mime_type": "video/mp4",
-                        "url": streams_720p,     
-                  },
-                     "18":{
-                        "quality": "360p",
-                        "mime_type": "video/mp4",
-                        "url": streams_360p,        
-                  },
-                     "17":{
-                        "quality": "144p",
-                        "mime_type": "video/mp4",
-                        "url": streams_144p,     
-                  },
-            },
-                     "title": title,
-                }
-            return (meta)
-                
+                '18':{
+                        'quality': '360p',
+                        'mime_type': 'video/mp4',
+                        'url': streams_360p.first().url,        
+                },
+                '17':{
+                        'quality': '144p',
+                        'mime_type': 'video/mp4',
+                        'url': streams_144p.first().url,     
+                },
+                'audio_128':{
+                        'quality': '128kbps',
+                        'mime_type': 'audio/mp4',
+                        'url': streams_audio_128.first().url, 
+                },
+                'audio_48':{
+                        'quality': '48kbps',
+                        'mime_type': 'audio/mp4',
+                        'url': streams_audio_48.first().url, 
+                },
+                },
+                    'title': title,
+                    'duration': length,
+                     'id':thumbnail ,
 
+
+                    }
+         return(meta)   
       elif len(streams_1080p_mp4) > 0 :
-            meta = {
-                "adaptive_formats_mp4":{  
-                    "0":{
-                        "quality": "1080p",
-                        "mime_type": "video/mp4",
-                        "url": streams_1080p_mp4.first().url,       
-                  },
-                     "1":{
-                        "quality": "720p",
-                        "mime_type": "video/mp4",
-                        "url": streams_720p_mp4.first().url,  
-                  },
-                     "2":{
-                        "quality": "480p",
-                        "mime_type": "video/mp4",
-                        "url": streams_480p_mp4.url,
-                  },
-                     "3":{
-                        "quality": "360p",
-                        "mime_type": "video/mp4",
-                        "url": streams_360p_mp4.url,
-                  },
-                     "4":{
-                        "quality": "240p",
-                        "mime_type": "video/mp4",
-                        "url": streams_240p_mp4.url,
-                  },
-                     "5":{
-                        "quality": "144p",
-                        "mime_type": "video/mp4",
-                        "url": streams_144p_mp4.url,
-                  },
+         meta = {
+                    'adaptive_formats_mp4':{  
+                        '0':{
+                            'quality': '1080p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_1080p_mp4.first().url,       
+                    },
+                    '1':{
+                            'quality': '720p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_720p_mp4.first().url,  
+                    },
+                        '2':{
+                            'quality': '480p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_480p_mp4.first().url,
+                        },
+                        '3':{
+                            'quality': '360p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_360p_mp4.first().url,
+                        },
+                        '4':{
+                            'quality': '240p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_240p_mp4.first().url,
+                        },
+                        '5':{
+                            'quality': '144p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_144p_mp4.first().url,
+                        },
+                    },
+                    'formats':{
+                    '22':{
+                        'quality': '720p',
+                        'mime_type': 'video/mp4',
+                        'url': streams_720p.first().url,     
                 },
-                  "formats":{
-                     "22":{
-                        "quality": "720p",
-                        "mime_type": "video/mp4",
-                        "url": streams_720p,     
-                  },
-                     "18":{
-                        "quality": "360p",
-                        "mime_type": "video/mp4",
-                        "url": streams_360p,        
-                  },
-                     "17":{
-                        "quality": "144p",
-                        "mime_type": "video/mp4",
-                        "url": streams_144p,     
-                  },
-               },
-                     "title": title,
-                }
-            return (meta)
-                
+                '18':{
+                        'quality': '360p',
+                        'mime_type': 'video/mp4',
+                        'url': streams_360p.first().url,        
+                },
+                '17':{
+                        'quality': '144p',
+                        'mime_type': 'video/mp4',
+                        'url': streams_144p.first().url,     
+                },
+                'audio_128':{
+                        'quality': '128kbps',
+                        'mime_type': 'audio/mp4',
+                        'url': streams_audio_128.first().url, 
+                },
+                'audio_48':{
+                        'quality': '48kbps',
+                        'mime_type': 'audio/mp4',
+                        'url': streams_audio_48.first().url, 
+                },
+                },
+                    'title': title,
+                    'duration': length,
+                     'id':thumbnail ,
 
+                    }
+         return(meta)    
       elif  len(streams_720p_mp4) > 0:
-            meta = {
-            "adaptive_formats_mp4":{  
-                  "0":{
-                    "quality": "720p",
-                    "mime_type": "video/mp4",
-                    "url": streams_720p_mp4.first().url,  
-               },
-                  "1":{
-                    "quality": "480p",
-                    "mime_type": "video/mp4",
-                    "url": streams_480p_mp4.url,
-               },
-                  "2":{
-                    "quality": "360p",
-                    "mime_type": "video/mp4",
-                    "url": streams_360p_mp4.url,
-               },
-                  "3":{
-                    "quality": "240p",
-                    "mime_type": "video/mp4",
-                    "url": streams_240p_mp4.url,
-               },
-                  "4":{
-                    "quality": "144p",
-                    "mime_type": "video/mp4",
-                    "url": streams_144p_mp4.url,
-               },
-            },
-               "formats":{
-                  "22":{
-                     "quality": "720p",
-                     "mime_type": "video/mp4",
-                     "url": streams_720p,
-                     
-               },
-                  "18":{
-                     "quality": "360p",
-                     "mime_type": "video/mp4",
-                     "url": streams_360p,        
-               },
-                  "17":{
-                     "quality": "144p",
-                     "mime_type": "video/mp4",
-                     "url": streams_144p,   
-               },
-            },
-                  "title": title,
-            }
-            return (meta)
-                
+         meta = {
+                    'adaptive_formats_mp4':{  
+                    '0':{
+                            'quality': '720p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_720p_mp4.first().url,  
+                    },
+                        '1':{
+                            'quality': '480p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_480p_mp4.first().url,
+                        },
+                        '2':{
+                            'quality': '360p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_360p_mp4.first().url,
+                        },
+                        '3':{
+                            'quality': '240p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_240p_mp4.first().url,
+                        },
+                        '4':{
+                            'quality': '144p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_144p_mp4.first().url,
+                        },
+                    },
+                    'formats':{
+                    '22':{
+                        'quality': '720p',
+                        'mime_type': 'video/mp4',
+                        'url': streams_720p.first().url,
+                        
+                },
+                '18':{
+                        'quality': '360p',
+                        'mime_type': 'video/mp4',
+                        'url': streams_360p.first().url,
+                        
+                },
+                '17':{
+                        'quality': '144p',
+                        'mime_type': 'video/mp4',
+                        'url': streams_144p.first().url,   
+                },
+                'audio_128':{
+                        'quality': '128kbps',
+                        'mime_type': 'audio/mp4',
+                        'url': streams_audio_128.first().url, 
+                },
+                'audio_48':{
+                        'quality': '48kbps',
+                        'mime_type': 'audio/mp4',
+                        'url': streams_audio_48.first().url, 
+                },
+                },
+                    'title': title,
+                    'duration': length,
+                     'id':thumbnail ,
 
-      elif len(streams_480p_mp4) > 0:
-            meta = {
-            "adaptive_formats_mp4":{  
-                  "0":{
-                    "quality": "480p",
-                    "mime_type": "video/mp4",
-                    "url": streams_480p_mp4.url,
-               },
-                  "1":{
-                    "quality": "360p",
-                    "mime_type": "video/mp4",
-                    "url": streams_360p_mp4.url,
-               },
-                  "2":{
-                    "quality": "240p",
-                    "mime_type": "video/mp4",
-                    "url": streams_240p_mp4.url,
-               },
-                  "3":{
-                    "quality": "144p",
-                    "mime_type": "video/mp4",
-                    "url": streams_144p_mp4.url,
-               },
-            },
-               "formats":{
-                  "22":{
-                     "quality": "720p",
-                     "mime_type": "video/mp4",
-                     "url": streams_720p,       
-               },
-                  "18":{
-                     "quality": "360p",
-                     "mime_type": "video/mp4",
-                     "url": streams_360p,      
-               },
-                  "17":{
-                     "quality": "144p",
-                     "mime_type": "video/mp4",
-                     "url": streams_144p,   
-               },
-            },
-                  "title": title,
-            }    
 
-            return (meta)
-                
+                    }
+         return(meta)       
 
       elif len(streams_360p_mp4) > 0:
-            meta = {
-            "adaptive_formats_mp4":{  
-                  "0":{
-                     "quality": "360p",
-                     "mime_type": "video/mp4",
-                     "url": streams_360p_mp4.url,
-               },
-                  "1":{
-                     "quality": "240p",
-                     "mime_type": "video/mp4",
-                     "url": streams_240p_mp4.url,
-               },
-                  "2":{
-                     "quality": "144p",
-                     "mime_type": "video/mp4",
-                     "url": streams_144p_mp4.url,
-               },
-            },
-               "formats":{
-                  "22":{
-                     "quality": "720p",
-                     "mime_type": "video/mp4",
-                     "url": streams_720p,       
-               },
-                  "18":{
-                     "quality": "360p",
-                     "mime_type": "video/mp4",
-                     "url": streams_360p,      
-               },
-                  "17":{
-                     "quality": "144p",
-                     "mime_type": "video/mp4",
-                     "url": streams_144p,   
-               },
-            },
-               "title": title,
-         }    
-            return (meta) 
+         meta = {
+               'adaptive_formats_mp4':{  
+                        '0':{
+                            'quality': '360p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_360p_mp4.first().url,
+                        },
+                        '1':{
+                            'quality': '240p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_240p_mp4.first().url,
+                        },
+                        '2':{
+                            'quality': '144p',
+                            'mime_type': 'video/mp4',
+                            'url': streams_144p_mp4.first().url,
+                        },
+                    },
+                    'formats':{
+                    '22':{
+                        'quality': '720p',
+                        'mime_type': 'video/mp4',
+                        'url': streams_360p.first().url,       
+                },
+                '18':{
+                        'quality': '360p',
+                        'mime_type': 'video/mp4',
+                        'url': streams_360p.first().url,      
+                },
+                '17':{
+                        'quality': '144p',
+                        'mime_type': 'video/mp4',
+                        'url': streams_144p.first().url,   
+                },
+                'audio_128':{
+                        'quality': '128kbps',
+                        'mime_type': 'audio/mp4',
+                        'url': streams_audio_128.first().url, 
+                },
+                'audio_48':{
+                        'quality': '48kbps',
+                        'mime_type': 'audio/mp4',
+                        'url': streams_audio_48.first().url, 
+                },
+                },
+                    'title': title,
+                    'duration': length,
+                     'id':thumbnail ,
+                    }    
+
+         return(meta)
 
       # return jsonify(meta)
     else:   
