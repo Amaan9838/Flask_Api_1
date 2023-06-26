@@ -33,20 +33,20 @@ def home():
 # this returns 100 (square of 10)
 @application.route("/home", methods = ["GET"])
 def scrap_reels():
-   #  http_1 = "185.199.228.220:7300:xlqlutuh:g64kgmh8afoh"
-   #  ht2 = "185.199.229.156:7492:xlqlutuh:g64kgmh8afoh"
-   # #  ht3 = "185.199.231.45:8382:xlqlutuh:g64kgmh8afoh"
-   # #  ht4 = "188.74.210.207:6286:xlqlutuh:g64kgmh8afoh"
-   # #  ht5 = "188.74.183.10:8279:xlqlutuh:g64kgmh8afoh"
-   # #  ht6 = "188.74.210.21:6100:xlqlutuh:g64kgmh8afoh"
-   # #  ht7 = "45.155.68.129:8133:xlqlutuh:g64kgmh8afoh"
-   # #  ht8 = "154.95.36.199:6893:xlqlutuh:g64kgmh8afoh"
-   # #  ht9 = "45.94.47.66:8110:xlqlutuh:g64kgmh8afoh"
+   #  http_1 = "185.199.228.220:7300:ewyhwkqa:989msyg77vq2"
+   #  ht2 = "185.199.229.156:7492:ewyhwkqa:989msyg77vq2"
+   # #  ht3 = "185.199.231.45:8382:ewyhwkqa:989msyg77vq2"
+   # #  ht4 = "188.74.210.207:6286:ewyhwkqa:989msyg77vq2"
+   # #  ht5 = "188.74.183.10:8279:ewyhwkqa:989msyg77vq2"
+   # #  ht6 = "188.74.210.21:6100:ewyhwkqa:989msyg77vq2"
+   # #  ht7 = "45.155.68.129:8133:ewyhwkqa:989msyg77vq2"
+   # #  ht8 = "154.95.36.199:6893:ewyhwkqa:989msyg77vq2"
+   # #  ht9 = "45.94.47.66:8110:ewyhwkqa:989msyg77vq2"
    #  inp = open("proxy_list.txt", "r")
    #  lines=inp.read().split("\n")
     
    #  http_proxy = random.choice(lines)
-   # #  http_proxy = "154.95.36.199:6893:xlqlutuh:g64kgmh8afoh"
+   # #  http_proxy = "154.95.36.199:6893:ewyhwkqa:989msyg77vq2"
     
    #  url = "https://ipv4.icanhazip.com"
 
@@ -54,15 +54,15 @@ def scrap_reels():
    #    "http": http_proxy,  
    #  }
     proxies = (  
-    "http://xlqlutuh:g64kgmh8afoh@185.199.229.156:7492",
-    "http://xlqlutuh:g64kgmh8afoh@185.199.228.220:7300",
-    "http://xlqlutuh:g64kgmh8afoh@185.199.231.45:8382",
-    "http://xlqlutuh:g64kgmh8afoh@188.74.210.207:6286",
-    "http://xlqlutuh:g64kgmh8afoh@188.74.183.10:8279",
-    "http://xlqlutuh:g64kgmh8afoh@188.74.210.21:6100",
-    "http://xlqlutuh:g64kgmh8afoh@45.155.68.129:8133",
-    "http://xlqlutuh:g64kgmh8afoh@154.95.36.199:6893",
-    "http://xlqlutuh:g64kgmh8afoh@45.94.47.66:8110"
+    "http://ewyhwkqa:989msyg77vq2@185.199.229.156:7492",
+    "http://ewyhwkqa:989msyg77vq2@185.199.228.220:7300",
+    "http://ewyhwkqa:989msyg77vq2@185.199.231.45:8382",
+    "http://ewyhwkqa:989msyg77vq2@188.74.210.207:6286",
+    "http://ewyhwkqa:989msyg77vq2@188.74.183.10:8279",
+    "http://ewyhwkqa:989msyg77vq2@188.74.210.21:6100",
+    "http://ewyhwkqa:989msyg77vq2@45.155.68.129:8133",
+    "http://ewyhwkqa:989msyg77vq2@154.95.36.199:6893",
+    "http://ewyhwkqa:989msyg77vq2@45.94.47.66:8110"
 
     )
 # length = len(proxies)
@@ -161,7 +161,7 @@ def scrap_reels():
         }
     else:
       url = target
-      video = CustomYouTube(url,use_oauth=False,allow_oauth_cache=True)
+      video = CustomYouTube(url,use_oauth=False,allow_oauth_cache=True,proxies=proxyDict)
       video.bypass_age_gate()
       duration = video.length
       title = video.title
@@ -540,15 +540,15 @@ def reels():
     g =  {"csrftoken":"0KDtcmLuS6S5piO0dJkTLZd5J8SAb8o3","sessionid":"53168773914%3Ag8rfaOhrydC3XF%3A3%3AAYc2B6nN_8PwOUgla2ZxAwGyYhnLXypui8fyQtXpbQ"} #farzi_kalosxyz  246800   
 #a d
     proxies = (  
-    "http://xlqlutuh:g64kgmh8afoh@185.199.229.156:7492",
-    "http://xlqlutuh:g64kgmh8afoh@185.199.228.220:7300",
-    "http://xlqlutuh:g64kgmh8afoh@185.199.231.45:8382",
-    "http://xlqlutuh:g64kgmh8afoh@188.74.210.207:6286",
-    "http://xlqlutuh:g64kgmh8afoh@188.74.183.10:8279",
-    "http://xlqlutuh:g64kgmh8afoh@188.74.210.21:6100",
-    "http://xlqlutuh:g64kgmh8afoh@45.155.68.129:8133",
-    "http://xlqlutuh:g64kgmh8afoh@154.95.36.199:6893",
-    "http://xlqlutuh:g64kgmh8afoh@45.94.47.66:8110"
+    "http://ewyhwkqa:989msyg77vq2@185.199.229.156:7492",
+    "http://ewyhwkqa:989msyg77vq2@185.199.228.220:7300",
+    "http://ewyhwkqa:989msyg77vq2@185.199.231.45:8382",
+    "http://ewyhwkqa:989msyg77vq2@188.74.210.207:6286",
+    "http://ewyhwkqa:989msyg77vq2@188.74.183.10:8279",
+    "http://ewyhwkqa:989msyg77vq2@188.74.210.21:6100",
+    "http://ewyhwkqa:989msyg77vq2@45.155.68.129:8133",
+    "http://ewyhwkqa:989msyg77vq2@154.95.36.199:6893",
+    "http://ewyhwkqa:989msyg77vq2@45.94.47.66:8110"
 
     )
     pr_oxy = [0,1,2,3,4,5,6,7,8]
