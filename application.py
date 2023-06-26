@@ -571,7 +571,7 @@ def reels():
       separator = "/"
 
       cut_story = cut_s.split(separator, 1)[0]  
-      user_id = requests.get(f"https://www.instagram.com/{cut_story}?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
+      user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
       uniqid = user_id["user"]["id"] 
       user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
  
@@ -593,7 +593,7 @@ def reels():
       separator = "/"
 
       cut_story = cut_s.split(separator, 1)[0]  
-      user_id = requests.get(f"https://www.instagram.com/{cut_story}?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
+      user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
       uniqid = user_id["user"]["id"] 
       user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
  
@@ -632,7 +632,7 @@ def reels():
     else:   
       cut_story= target
       
-      user_id = requests.get(f"https://www.instagram.com/{cut_story}?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
+      user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
       uniqid = user_id["user"]["id"] 
       user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
  
