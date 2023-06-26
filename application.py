@@ -572,42 +572,44 @@ def reels():
 
       cut_story = cut_s.split(separator, 1)[0]  
       user_id = requests.get(f"https://www.instagram.com/{cut_story}?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
-      is_priv = user_id["graphql"]["user"]["is_private"]
-      uniqid = user_id["graphql"]["user"]["id"]
+      uniqid = user_id["user"]["id"] 
+      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
+ 
+      is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
+    #   uniqid = user_id["graphql"]["user"]["id"] 
       if is_priv == True:
          meta = {
         "account": is_priv,
        }
-      elif is_priv == False:
-       #user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
-       
-       user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
+      elif is_priv == False:   
+    #    user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
        meta = {
         "story": user_id_req,
         "uniqid":uniqid,
         "account": is_priv,
-       }   
+       }      
     elif target[:30] == "https://instagram.com/stories/" :
       cut_s = target[30:]
       separator = "/"
 
       cut_story = cut_s.split(separator, 1)[0]  
       user_id = requests.get(f"https://www.instagram.com/{cut_story}?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
-      is_priv = user_id["graphql"]["user"]["is_private"]
-      uniqid = user_id["graphql"]["user"]["id"]
+      uniqid = user_id["user"]["id"] 
+      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
+ 
+      is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
+    #   uniqid = user_id["graphql"]["user"]["id"] 
       if is_priv == True:
          meta = {
         "account": is_priv,
        }
-      elif is_priv == False:
-       #user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar).json()
-       #uniqid = user_id["user"]["id"]
-       user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
+      elif is_priv == False:   
+    #    user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
        meta = {
         "story": user_id_req,
         "uniqid":uniqid,
         "account": is_priv,
-       }    
+       }       
     elif target[:32] == "https://www.youtube.com/watch?v=" or target[:31] == "https://www.youtube.com/shorts/" or target[:27] == "https://youtube.com/shorts/" or target[:17] == "https://youtu.be/":
          # url = "https://www.youtube.com/watch?v=11OWuPcElJw"   
          # age restricted
@@ -631,20 +633,22 @@ def reels():
       cut_story= target
       
       user_id = requests.get(f"https://www.instagram.com/{cut_story}?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
-      uniqid = user_id["graphql"]["user"]["id"]
-      is_priv = user_id["graphql"]["user"]["is_private"]
-      
+      uniqid = user_id["user"]["id"] 
+      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
+ 
+      is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
+    #   uniqid = user_id["graphql"]["user"]["id"] 
       if is_priv == True:
          meta = {
-      "account": is_priv,
-      }
-      elif is_priv == False:
-         user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
-         meta = {
-         "story": user_id_req,
-         "uniqid":uniqid,
-         "account": is_priv,
-         }
+        "account": is_priv,
+       }
+      elif is_priv == False:   
+    #    user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
+       meta = {
+        "story": user_id_req,
+        "uniqid":uniqid,
+        "account": is_priv,
+       }   
     # if target[:32] == "https://www.youtube.com/watch?v=" or target[:31] == "https://www.youtube.com/shorts/" or target[:27] == "https://youtube.com/shorts/" or target[:17] == "https://youtu.be/":
     
     #    return (response.json())
