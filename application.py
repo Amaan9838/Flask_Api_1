@@ -1,6 +1,7 @@
 # Using flask to make an api
 # import necessary libraries and functions
 from flask import Flask, jsonify, request, url_for
+from flask_gzip import Gzip
 import os
 import requests
 import json
@@ -13,6 +14,7 @@ from custom_youtube import CustomYouTube
 
 # creating a Flask app
 application= Flask(__name__)
+gzip = Gzip(application)
 
 # on the terminal type: curl http://127.0.0.1:5000/
 # returns hello world when we use GET.
@@ -322,7 +324,7 @@ def scrap_reels():
 
 
                     }
-         return(meta)   
+         return jsonify(meta)   
       elif len(streams_1080p_mp4) > 0 :
          meta = {
                     'adaptive_formats_mp4':{  
@@ -389,7 +391,7 @@ def scrap_reels():
                      'id':thumbnail ,
 
                     }
-         return(meta)    
+         return jsonify(meta)    
       elif  len(streams_720p_mp4) > 0:
          meta = {
                     'adaptive_formats_mp4':{  
@@ -454,7 +456,7 @@ def scrap_reels():
 
 
                     }
-         return(meta)       
+         return jsonify(meta)       
 
       elif len(streams_360p_mp4) > 0:
          meta = {
@@ -507,7 +509,7 @@ def scrap_reels():
                      'id':thumbnail ,
                     }    
 
-         return(meta)
+         return jsonify(meta)
     #      cut = target[-11:]
     #      url = "https://youtube-video-download-info.p.rapidapi.com/dl"
 
