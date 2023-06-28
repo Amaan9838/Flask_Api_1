@@ -163,7 +163,7 @@ def scrap_reels():
         }
     else:
       url = target
-      video = CustomYouTube(url,use_oauth=False,allow_oauth_cache=True,proxies=proxyDict)
+      video = CustomYouTube(url,use_oauth=False,allow_oauth_cache=True)
       video.bypass_age_gate()
       duration = video.length
       title = video.title
