@@ -2,6 +2,8 @@
 # import necessary libraries and functions
 from flask import Flask, jsonify, request, url_for
 from flask_gzip import Gzip
+from flask_htmlmin import HTMLMIN
+from flask_caching import Cache
 import os
 import requests
 import json
@@ -9,17 +11,18 @@ from datetime import datetime
 import requests
 import youtube_dl
 import random 
-# from pytube_age import YouTube
 from custom_youtube import CustomYouTube
 
 # creating a Flask app
 application= Flask(__name__)
 gzip = Gzip(application)
 
-# on the terminal type: curl http://127.0.0.1:5000/
-# returns hello world when we use GET.
-# returns the data that we send when we use POST.
+application.config['MINIFY_HTML'] = True
+htmlmin = HTMLMIN(application)
 
+# Configure caching
+application.config['CACHE_TYPE'] = 'simple'
+cache = Cache(application)
 
 @application.route("/", methods = ["GET", "POST"])
 def home():
@@ -27,34 +30,9 @@ def home():
 
 		data = "hello world"
 		return jsonify({"data": data})
-
-
-# A simple function to calculate the square of a number
-# the number to be squared is sent in the URL when we use GET
-# on the terminal type: curl http://127.0.0.1:5000 / home / 10
-# this returns 100 (square of 10)
 @application.route("/home", methods = ["GET"])
+@cache.cached(timeout=128300)
 def scrap_reels():
-   #  http_1 = "185.199.228.220:7300:ewyhwkqa:989msyg77vq2"
-   #  ht2 = "185.199.229.156:7492:ewyhwkqa:989msyg77vq2"
-   # #  ht3 = "185.199.231.45:8382:ewyhwkqa:989msyg77vq2"
-   # #  ht4 = "188.74.210.207:6286:ewyhwkqa:989msyg77vq2"
-   # #  ht5 = "188.74.183.10:8279:ewyhwkqa:989msyg77vq2"
-   # #  ht6 = "188.74.210.21:6100:ewyhwkqa:989msyg77vq2"
-   # #  ht7 = "45.155.68.129:8133:ewyhwkqa:989msyg77vq2"
-   # #  ht8 = "154.95.36.199:6893:ewyhwkqa:989msyg77vq2"
-   # #  ht9 = "45.94.47.66:8110:ewyhwkqa:989msyg77vq2"
-   #  inp = open("proxy_list.txt", "r")
-   #  lines=inp.read().split("\n")
-    
-   #  http_proxy = random.choice(lines)
-   # #  http_proxy = "154.95.36.199:6893:ewyhwkqa:989msyg77vq2"
-    
-   #  url = "https://ipv4.icanhazip.com"
-
-   #  proxyDict = {
-   #    "http": http_proxy,  
-   #  }
     proxies = (  
     "http://ewyhwkqa:989msyg77vq2@185.199.229.156:7492",
     "http://ewyhwkqa:989msyg77vq2@185.199.228.220:7300",
@@ -67,13 +45,8 @@ def scrap_reels():
     "http://ewyhwkqa:989msyg77vq2@45.94.47.66:8110"
 
     )
-# length = len(proxies)
-# n = length * 2 
-# for i in range(n):
-#     index = i % length
     pr_oxy = [0,1,2,3,4,5,6,7,8]
     index = random.choice(pr_oxy)
-   #  print(index)
     proxyDict = {"http" : proxies[index], "https" : proxies[index]}
     a = {"csrftoken":"JIzYAn9hVRjoDdNIQnLsqFCoVouO1WMC","sessionid":"53168773914%3AD0YRVq8KvrDZCf%3A15%3AAYeyRlmOZf2XHeCEuLrRfccq-JNAPqUO9PMiBSRIsA"}#rocky__8081  Ashar123
     b =  {"csrftoken":"1jwyJ5QczmCIva5ROe2OOj8opDwazXL3","sessionid":"36744979802%3AmISFYgnEY22rzr%3A20%3AAYc4E5uksgDF77ikhfeHkkTbGplkf92-acsJYzzptQ"} #farzi_kalosxyz  246800
@@ -81,7 +54,6 @@ def scrap_reels():
     e =  {"csrftoken":"A6ledrZ83DJGCvmDYfF3vTIHQG1LOaCJ","sessionid":"53168773914%3Aafljno0aL18bpZ%3A23%3AAYcQfhhvaU7HHcy3YwKtp0x5bUbznwbsyqeKNMtYvw"}   #farzi_kalosxyz 246800
     f =  {"csrftoken":"yG0qeT6AdwIO2gUFLGSjvtYFYxhwA8eO","sessionid":"53168773914%3AiTndpEqqT0utPz%3A26%3AAYfZvE4oVH6l2zLFObt5svVqXXKFFJoAVk0uZ0pFjg"} #farzi_kalosxyz  246800   
     g =  {"csrftoken":"0KDtcmLuS6S5piO0dJkTLZd5J8SAb8o3","sessionid":"53168773914%3Ag8rfaOhrydC3XF%3A3%3AAYc2B6nN_8PwOUgla2ZxAwGyYhnLXypui8fyQtXpbQ"} #farzi_kalosxyz  246800   
-#a d
     c= [a,e,f,g]
     cookie_jar = random.choice(c)
     headers = {
@@ -90,12 +62,10 @@ def scrap_reels():
          }
     csrf_token = cookie_jar["csrftoken"]
     session_id = cookie_jar["sessionid"]
-     
     source = request.args["source"] 
     target = format(source)
     if target[:31] == "https://www.instagram.com/reel/" :
      cut_reel = target[31:42]
-
      user_id_req = requests.get(f"https://www.instagram.com/p/{cut_reel}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
      meta = {
               "posts": user_id_req,
@@ -104,21 +74,17 @@ def scrap_reels():
            }      
     elif target[:28] == "https://www.instagram.com/p/":
      cut_post = target[28:39]
-
      user_id_req = requests.get(f"https://www.instagram.com/p/{cut_post}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
      meta = {
         "posts": user_id_req,
         }
-     
     elif target[:34] == "https://www.instagram.com/stories/" :
       cut_s = target[34:]
       separator = "/"
-
       cut_story = cut_s.split(separator, 1)[0] 
       user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
       uniqid = user_id["user"]["id"] 
       user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
- 
       is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
     #   uniqid = user_id["graphql"]["user"]["id"] 
       if is_priv == True:
@@ -135,12 +101,10 @@ def scrap_reels():
     elif target[:30] == "https://instagram.com/stories/" :
       cut_s = target[30:]
       separator = "/"
-
       cut_story = cut_s.split(separator, 1)[0]  
       user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
       uniqid = user_id["user"]["id"] 
       user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
- 
       is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
     #   uniqid = user_id["graphql"]["user"]["id"] 
       if is_priv == True:
@@ -156,10 +120,8 @@ def scrap_reels():
        }          
     elif target[:33] == "https://www.facebook.com/watch?v=" or target[:17] == "https://fb.watch/" or target[:24] == "https://www.facebook.com":
         ydl_opts = {}
-        
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
           info = ydl.extract_info(target, download=False)
-        
         meta = {
             "ytdll": info,
         }
@@ -171,59 +133,39 @@ def scrap_reels():
       title = video.title
       thumbnail = video.thumbnail_url
       separator = "/"
-
       thumbnail = thumbnail.split(separator, 5)[4]
       if duration > 60  and duration <= 3600:
          minute = (duration/60)
          sec = round((minute%1)*60)
          sec = str(sec)
          if len(str(sec)) == 1:
-         # length = ":".join([le, nt])
             minute = str(int(minute))
             length = ":0".join([minute, sec])
-            # print(length)
          else:    
             minute = str(int(minute))
             length = ":".join([minute, sec])
-            # print(length)
       elif len(str(duration)) >= 4:
          hr = (duration/60)/60
          sec = round(((duration/60)%1)*60)
          nt = round((hr%1)*60)
-
-         # minute = nt*60
-         # minute = round(minute)
          minute = str(nt)
          sec = str(sec)
-         # length = ":".join([le, nt])
          hr = str(int(hr))
-         # hr = str(hr)
-         # length = ":".join([hr, minute])
          lengthh = ":".join([hr, minute])
          length =  ":".join([lengthh, sec])
-         # print(length)
       elif duration == 60:
          length = duration/60
-         length = str(round(length))+":00" 
-      # elif duration > 60  and duration <= 99:
-      #     minute = duration/60
-      #     sec = round((minute%1)*60)
-      #     length = str(round(length))+":00"     
+         length = str(round(length))+":00"     
       else:
          length = "00:"+str(duration) 
       streams_720p = video.streams.filter(progressive=True,res='720p',audio_codec="mp4a.40.2")
       streams_720p_download = video.streams.filter(progressive=True,res='720p',audio_codec="mp4a.40.2")
-
       streams_360p = video.streams.filter(progressive=True,res='360p',audio_codec="mp4a.40.2")
       streams_144p = video.streams.filter(progressive=True,res='144p',audio_codec="mp4a.40.2")
-
       streams_2160p_mp4 = video.streams.filter(progressive=False,res='2160p')
       streams_1440p_mp4 = video.streams.filter(progressive=False,res='1440p')
       streams_1080p_mp4 = video.streams.filter(progressive=False,res='1080p',mime_type='video/mp4')
-
       streams_audio_mp4 = video.streams.filter(progressive=False,mime_type='audio/mp4')
-
-
       streams_720p_mp4 = video.streams.filter(adaptive=True,res='720p',mime_type='video/mp4')
       streams_480p_mp4 = video.streams.filter(progressive=False,res='480p',mime_type='video/mp4')
       streams_360p_mp4 = video.streams.filter(adaptive=True,res='360p',mime_type='video/mp4')
@@ -231,305 +173,165 @@ def scrap_reels():
       streams_144p_mp4 = video.streams.filter(progressive=False,res='144p',mime_type='video/mp4')
       streams_audio_128 = video.streams.filter(progressive=False,mime_type='audio/mp4', abr='128kbps')
       streams_audio_48 = video.streams.filter(progressive=False,mime_type='audio/mp4', abr='48kbps')
-
-      # output_dir = 'downloads'
-      # output_path = os.path.join(output_dir, f'{video.title[:3]}.mp4')
-        
-      # streams_720p_download.download(output_path)
-        # print(streams_audio.first().url)
-
-        # print(streams_2160p_mp4.first())
-      # streams_720p_download.download(filename="test_vid4.mp4")
-        # print(streams_1440p_mp4)
-        # print(streams_1080p_mp4)
-
-        # preffered_resolution = ["144p", "240p", "360p", "480p", "720p", "1080p","1440p","2160p"]
-        # for resolution in preffered_resolution: 
-        #     video_adaptive_streams = video.streams.filter(progressive=False, res=resolution)
-        #     print(video_adaptive_streams)
       if len(streams_2160p_mp4) > 0 :
-         meta = {
-                    'adaptive_formats_mp4':{ 
+         meta = {'adaptive_formats_mp4':{ 
                         '0':{
                             'quality': '2160p',
                             'mime_type': 'video/mp4',
-                            'url': streams_2160p_mp4.first().url,       
-                    }, 
-                    '1':{
+                            'url': streams_2160p_mp4.first().url,},'1':{
                             'quality': '1440p',
                             'mime_type': 'video/mp4',
-                            'url': streams_1440p_mp4.first().url,       
-                    },
-                        '2':{
+                            'url': streams_1440p_mp4.first().url,},'2':{
                             'quality': '1080p',
                             'mime_type': 'video/mp4',
-                            'url': streams_1080p_mp4.first().url,       
-                    },
-                    '3':{
+                            'url': streams_1080p_mp4.first().url,},'3':{
                             'quality': '720p',
                             'mime_type': 'video/mp4',
-                            'url': streams_720p_mp4.first().url,  
-                    },
-                        '4':{
+                            'url': streams_720p_mp4.first().url,},'4':{
                             'quality': '480p',
                             'mime_type': 'video/mp4',
-                            'url': streams_480p_mp4.first().url,
-                        },
-                        '5':{
+                            'url': streams_480p_mp4.first().url,},'5':{
                             'quality': '360p',
                             'mime_type': 'video/mp4',
-                            'url': streams_360p_mp4.first().url,
-                        },
-                        '6':{
+                            'url': streams_360p_mp4.first().url,},'6':{
                             'quality': '240p',
                             'mime_type': 'video/mp4',
-                            'url': streams_240p_mp4.first().url,
-                        },
-                        '7':{
+                            'url': streams_240p_mp4.first().url,},'7':{
                             'quality': '144p',
                             'mime_type': 'video/mp4',
-                            'url': streams_144p_mp4.first().url,
-                        },
-                    },
-                    'formats':{
-                    '22':{
+                            'url': streams_144p_mp4.first().url,},},
+                    'formats':{'22':{
                         'quality': '720p',
                         'mime_type': 'video/mp4',
-                        'url': streams_720p.first().url,     
-                },
-                '18':{
+                        'url': streams_720p.first().url,},'18':{
                         'quality': '360p',
                         'mime_type': 'video/mp4',
-                        'url': streams_360p.first().url,        
-                },
-                '17':{
+                        'url': streams_360p.first().url,},'17':{
                         'quality': '144p',
                         'mime_type': 'video/mp4',
-                        'url': streams_144p.first().url,     
-                },
-                'audio_128':{
+                        'url': streams_144p.first().url,},'audio_128':{
                         'quality': '128kbps',
                         'mime_type': 'audio/mp4',
-                        'url': streams_audio_128.first().url, 
-                },
-                'audio_48':{
+                        'url': streams_audio_128.first().url, },'audio_48':{
                         'quality': '48kbps',
                         'mime_type': 'audio/mp4',
-                        'url': streams_audio_48.first().url, 
-                },
-                },
+                        'url': streams_audio_48.first().url, },},
                     'title': title,
                     'duration': length,
-                     'id':thumbnail ,
-
-
-                    }
+                     'id':thumbnail ,}
          return jsonify(meta)   
       elif len(streams_1080p_mp4) > 0 :
-         meta = {
-                    'adaptive_formats_mp4':{  
-                        '0':{
+         meta = {'adaptive_formats_mp4':{  '0':{
                             'quality': '1080p',
                             'mime_type': 'video/mp4',
-                            'url': streams_1080p_mp4.first().url,       
-                    },
-                    '1':{
+                            'url': streams_1080p_mp4.first().url,},'1':{
                             'quality': '720p',
                             'mime_type': 'video/mp4',
-                            'url': streams_720p_mp4.first().url,  
-                    },
-                        '2':{
+                            'url': streams_720p_mp4.first().url,},'2':{
                             'quality': '480p',
                             'mime_type': 'video/mp4',
-                            'url': streams_480p_mp4.first().url,
-                        },
-                        '3':{
+                            'url': streams_480p_mp4.first().url,},'3':{
                             'quality': '360p',
                             'mime_type': 'video/mp4',
-                            'url': streams_360p_mp4.first().url,
-                        },
-                        '4':{
+                            'url': streams_360p_mp4.first().url,},'4':{
                             'quality': '240p',
                             'mime_type': 'video/mp4',
-                            'url': streams_240p_mp4.first().url,
-                        },
-                        '5':{
+                            'url': streams_240p_mp4.first().url,},'5':{
                             'quality': '144p',
                             'mime_type': 'video/mp4',
-                            'url': streams_144p_mp4.first().url,
-                        },
-                    },
-                    'formats':{
-                    '22':{
+                            'url': streams_144p_mp4.first().url,},},
+                    'formats':{'22':{
                         'quality': '720p',
                         'mime_type': 'video/mp4',
-                        'url': streams_720p.first().url,     
-                },
-                '18':{
+                        'url': streams_720p.first().url,},'18':{
                         'quality': '360p',
                         'mime_type': 'video/mp4',
-                        'url': streams_360p.first().url,        
-                },
-                '17':{
+                        'url': streams_360p.first().url,},'17':{
                         'quality': '144p',
                         'mime_type': 'video/mp4',
-                        'url': streams_144p.first().url,     
-                },
-                'audio_128':{
+                        'url': streams_144p.first().url,},'audio_128':{
                         'quality': '128kbps',
                         'mime_type': 'audio/mp4',
-                        'url': streams_audio_128.first().url, 
-                },
-                'audio_48':{
+                        'url': streams_audio_128.first().url,},'audio_48':{
                         'quality': '48kbps',
                         'mime_type': 'audio/mp4',
-                        'url': streams_audio_48.first().url, 
-                },
-                },
+                        'url': streams_audio_48.first().url,},},
                     'title': title,
                     'duration': length,
-                     'id':thumbnail ,
-
-                    }
+                     'id':thumbnail ,}
          return jsonify(meta)    
       elif  len(streams_720p_mp4) > 0:
-         meta = {
-                    'adaptive_formats_mp4':{  
-                    '0':{
+         meta = {'adaptive_formats_mp4':{'0':{
                             'quality': '720p',
                             'mime_type': 'video/mp4',
-                            'url': streams_720p_mp4.first().url,  
-                    },
-                        '1':{
+                            'url': streams_720p_mp4.first().url,},'1':{
                             'quality': '480p',
                             'mime_type': 'video/mp4',
-                            'url': streams_480p_mp4.first().url,
-                        },
-                        '2':{
+                            'url': streams_480p_mp4.first().url,},'2':{
                             'quality': '360p',
                             'mime_type': 'video/mp4',
-                            'url': streams_360p_mp4.first().url,
-                        },
-                        '3':{
+                            'url': streams_360p_mp4.first().url,},'3':{
                             'quality': '240p',
                             'mime_type': 'video/mp4',
-                            'url': streams_240p_mp4.first().url,
-                        },
-                        '4':{
+                            'url': streams_240p_mp4.first().url,},'4':{
                             'quality': '144p',
                             'mime_type': 'video/mp4',
-                            'url': streams_144p_mp4.first().url,
-                        },
-                    },
-                    'formats':{
-                    '22':{
+                            'url': streams_144p_mp4.first().url,},},
+                    'formats':{'22':{
                         'quality': '720p',
                         'mime_type': 'video/mp4',
-                        'url': streams_720p.first().url,
-                        
-                },
-                '18':{
+                        'url': streams_720p.first().url,},'18':{
                         'quality': '360p',
                         'mime_type': 'video/mp4',
-                        'url': streams_360p.first().url,
-                        
-                },
-                '17':{
+                        'url': streams_360p.first().url,},'17':{
                         'quality': '144p',
                         'mime_type': 'video/mp4',
-                        'url': streams_144p.first().url,   
-                },
-                'audio_128':{
+                        'url': streams_144p.first().url,},'audio_128':{
                         'quality': '128kbps',
                         'mime_type': 'audio/mp4',
-                        'url': streams_audio_128.first().url, 
-                },
-                'audio_48':{
+                        'url': streams_audio_128.first().url,},'audio_48':{
                         'quality': '48kbps',
                         'mime_type': 'audio/mp4',
-                        'url': streams_audio_48.first().url, 
-                },
-                },
+                        'url': streams_audio_48.first().url,},},
                     'title': title,
                     'duration': length,
-                     'id':thumbnail ,
-
-
-                    }
+                     'id':thumbnail ,}
          return jsonify(meta)       
 
       elif len(streams_360p_mp4) > 0:
-         meta = {
-               'adaptive_formats_mp4':{  
-                        '0':{
+         meta = {'adaptive_formats_mp4':{'0':{
                             'quality': '360p',
                             'mime_type': 'video/mp4',
-                            'url': streams_360p_mp4.first().url,
-                        },
-                        '1':{
+                            'url': streams_360p_mp4.first().url,},'1':{
                             'quality': '240p',
                             'mime_type': 'video/mp4',
-                            'url': streams_240p_mp4.first().url,
-                        },
-                        '2':{
+                            'url': streams_240p_mp4.first().url,},'2':{
                             'quality': '144p',
                             'mime_type': 'video/mp4',
-                            'url': streams_144p_mp4.first().url,
-                        },
-                    },
-                    'formats':{
-                    '22':{
+                            'url': streams_144p_mp4.first().url, },},
+                    'formats':{'22':{
                         'quality': '720p',
                         'mime_type': 'video/mp4',
-                        'url': streams_360p.first().url,       
-                },
-                '18':{
+                        'url': streams_360p.first().url,},'18':{
                         'quality': '360p',
                         'mime_type': 'video/mp4',
-                        'url': streams_360p.first().url,      
-                },
-                '17':{
+                        'url': streams_360p.first().url,},'17':{
                         'quality': '144p',
                         'mime_type': 'video/mp4',
-                        'url': streams_144p.first().url,   
-                },
-                'audio_128':{
+                        'url': streams_144p.first().url,},'audio_128':{
                         'quality': '128kbps',
                         'mime_type': 'audio/mp4',
-                        'url': streams_audio_128.first().url, 
-                },
-                'audio_48':{
+                        'url': streams_audio_128.first().url,},'audio_48':{
                         'quality': '48kbps',
                         'mime_type': 'audio/mp4',
-                        'url': streams_audio_48.first().url, 
-                },
-                },
+                        'url': streams_audio_48.first().url,}, },
                     'title': title,
                     'duration': length,
                      'id':thumbnail ,
                     }    
-
          return jsonify(meta)
-    #      cut = target[-11:]
-    #      url = "https://youtube-video-download-info.p.rapidapi.com/dl"
-
-    #      querystring = {"id": cut}
-
-    #      headers = {
-	#  "X-RapidAPI-Key": "6e7e0e613dmsh7da1932734a8a9ap14bcb6jsn4c51c4a9f466",
-	#  "X-RapidAPI-Host": "youtube-video-download-info.p.rapidapi.com"
-    #    }
-
-    #      response = requests.request("GET", url, headers=headers, params=querystring).json()
-    #    url = up.youtube(target)
-
-    #    response = {
-    #      'data': url,
-    #   }
-    if target[:32] == "https://www.youtube.com/watch?v=" or target[:31] == "https://www.youtube.com/shorts/" or target[:27] == "https://youtube.com/shorts/" or target[:17] == "https://youtu.be/":
-       
-       return (meta)
-        
+    if target[:32] == "https://www.youtube.com/watch?v=" or target[:31] == "https://www.youtube.com/shorts/" or target[:27] == "https://youtube.com/shorts/" or target[:17] == "https://youtu.be/": 
+       return jsonify(meta)   
     else:
 
        return jsonify(meta)
