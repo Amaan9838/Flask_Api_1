@@ -337,6 +337,7 @@ def scrap_reels():
        return jsonify(meta)
 #http://127.0.0.1:5000/home?source=https://www.facebook.com/watch?v=1245895546280667
 @application.route("/story", methods = ["GET"])
+@cache.cached(timeout=300, key_prefix=lambda: request.full_path)
 def reels():
     a = {"csrftoken":"JIzYAn9hVRjoDdNIQnLsqFCoVouO1WMC","sessionid":"53168773914%3AD0YRVq8KvrDZCf%3A15%3AAYeyRlmOZf2XHeCEuLrRfccq-JNAPqUO9PMiBSRIsA"}#rocky__8081  Ashar123
     b =  {"csrftoken":"1jwyJ5QczmCIva5ROe2OOj8opDwazXL3","sessionid":"36744979802%3AmISFYgnEY22rzr%3A20%3AAYc4E5uksgDF77ikhfeHkkTbGplkf92-acsJYzzptQ"} #farzi_kalosxyz  246800
