@@ -3,7 +3,7 @@
 from flask import Flask, jsonify, request, url_for
 from flask_gzip import Gzip
 from flask_htmlmin import HTMLMIN
-# from flask_caching import Cache
+from flask_caching import Cache
 import os
 import requests
 import json
@@ -20,6 +20,10 @@ gzip = Gzip(application)
 application.config['MINIFY_HTML'] = True
 htmlmin = HTMLMIN(application)
 
+# Configure caching
+application.config['CACHE_TYPE'] = 'simple'
+cache = Cache(application)
+
 @application.route("/", methods = ["GET", "POST"])
 def home():
 	if(request.method == "GET"):
@@ -27,6 +31,7 @@ def home():
 		data = "hello world"
 		return jsonify({"data": data})
 @application.route("/home", methods = ["GET"])
+@cache.cached(timeout=300, key_prefix=lambda: request.full_path)
 def scrap_reels():
     proxies = (  
     "http://ewyhwkqa:989msyg77vq2@185.199.229.156:7492",
