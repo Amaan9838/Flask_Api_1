@@ -31,7 +31,7 @@ def home():
 		data = "hello world"
 		return jsonify({"data": data})
 @application.route("/home", methods = ["GET"])
-@cache.cached(timeout=1284300, key_prefix=lambda: request.full_path)
+# @cache.cached(timeout=1284300, key_prefix=lambda: request.full_path)
 def scrap_reels():
     proxies = (  
     "http://ewyhwkqa:989msyg77vq2@185.199.229.156:7492",
