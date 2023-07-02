@@ -65,13 +65,27 @@ def scrap_reels():
     source = request.args["source"] 
     target = format(source)
     if target[:31] == "https://www.instagram.com/reel/" :
-     cut_reel = target[31:42]
+     cut_s = target[31:]
+     separator = "/"
+     cut_reel = cut_s.split(separator, 1)[0] 
+
      user_id_req = requests.get(f"https://www.instagram.com/p/{cut_reel}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
      meta = {
               "posts": user_id_req,
               "cookie_jar":cookie_jar,
               "ip": proxyDict
            }      
+    elif target[:32] == "https://www.instagram.com/reels/" :
+     cut_s = target[32:]
+     separator = "/"
+     cut_reel = cut_s.split(separator, 1)[0] 
+
+     user_id_req = requests.get(f"https://www.instagram.com/p/{cut_reel}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
+     meta = {
+              "posts": user_id_req,
+              "cookie_jar":cookie_jar,
+              "ip": proxyDict
+           }        
     elif target[:28] == "https://www.instagram.com/p/":
      cut_post = target[28:39]
      user_id_req = requests.get(f"https://www.instagram.com/p/{cut_post}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
