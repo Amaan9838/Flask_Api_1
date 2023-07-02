@@ -87,7 +87,9 @@ def scrap_reels():
               "ip": proxyDict
            }        
     elif target[:28] == "https://www.instagram.com/p/":
-     cut_post = target[28:39]
+     cut_s = target[28:]
+     separator = "/"
+     cut_post = cut_s.split(separator, 1)[0] 
      user_id_req = requests.get(f"https://www.instagram.com/p/{cut_post}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
      meta = {
         "posts": user_id_req,
