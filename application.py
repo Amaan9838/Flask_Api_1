@@ -430,7 +430,35 @@ def reels():
         "story": user_id_req,
         "uniqid":uniqid,
         "account": is_priv,
-       }       
+       } 
+    elif target[:31] == "https://www.instagram.com/reel/" :
+         cut_s = target[31:]
+         separator = "/"
+         cut_reel = cut_s.split(separator, 1)[0] 
+         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers).json()
+         meta = {
+                  "posts": user_id_req,
+                  "cookie_jar":cookie_jar,
+                  "ip": proxyDict
+               }      
+    elif target[:32] == "https://www.instagram.com/reels/" :
+         cut_s = target[32:]
+         separator = "/"
+         cut_reel = cut_s.split(separator, 1)[0] 
+         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers).json()
+         meta = {
+                  "posts": user_id_req,
+                  "cookie_jar":cookie_jar,
+                  "ip": proxyDict
+               }        
+    elif target[:28] == "https://www.instagram.com/p/":
+         cut_s = target[28:]
+         separator = "/"
+         cut_reel = cut_s.split(separator, 1)[0] 
+         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers).json()
+         meta = {
+            "posts": user_id_req,
+            }         
     elif target[:32] == "https://www.youtube.com/watch?v=" or target[:31] == "https://www.youtube.com/shorts/" or target[:27] == "https://youtube.com/shorts/" or target[:17] == "https://youtu.be/":
          # url = "https://www.youtube.com/watch?v=11OWuPcElJw"   
          # age restricted
