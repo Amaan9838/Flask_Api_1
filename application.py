@@ -353,7 +353,7 @@ def scrap_reels():
        return jsonify(meta)
 #http://127.0.0.1:5000/home?source=https://www.facebook.com/watch?v=1245895546280667
 @application.route("/story", methods = ["GET"])
-# @cache.cached(timeout=10, key_prefix=lambda: request.full_path)
+@cache.cached(timeout=1284300, key_prefix=lambda: request.full_path)
 def reels():
     a = {"csrftoken":"JIzYAn9hVRjoDdNIQnLsqFCoVouO1WMC","sessionid":"53168773914%3AD0YRVq8KvrDZCf%3A15%3AAYeyRlmOZf2XHeCEuLrRfccq-JNAPqUO9PMiBSRIsA"}#rocky__8081  Ashar123
     b =  {"csrftoken":"1jwyJ5QczmCIva5ROe2OOj8opDwazXL3","sessionid":"36744979802%3AmISFYgnEY22rzr%3A20%3AAYc4E5uksgDF77ikhfeHkkTbGplkf92-acsJYzzptQ"} #farzi_kalosxyz  246800
@@ -435,7 +435,7 @@ def reels():
          cut_s = target[31:]
          separator = "/"
          cut_reel = cut_s.split(separator, 1)[0] 
-         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers).json()
+         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers, cookies=cookie_jar).json()
          meta = {
                   "posts": user_id_req,
                   "cookie_jar":cookie_jar,
@@ -445,7 +445,7 @@ def reels():
          cut_s = target[32:]
          separator = "/"
          cut_reel = cut_s.split(separator, 1)[0] 
-         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers).json()
+         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers ,cookies=cookie_jar).json()
          meta = {
                   "posts": user_id_req,
                   "cookie_jar":cookie_jar,
@@ -455,7 +455,7 @@ def reels():
          cut_s = target[28:]
          separator = "/"
          cut_reel = cut_s.split(separator, 1)[0] 
-         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers).json()
+         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers ,cookies=cookie_jar).json()
          meta = {
             "posts": user_id_req,
             }         
