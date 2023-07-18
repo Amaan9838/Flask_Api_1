@@ -363,18 +363,19 @@ def reels():
     g =  {"csrftoken":"0KDtcmLuS6S5piO0dJkTLZd5J8SAb8o3","sessionid":"53168773914%3Ag8rfaOhrydC3XF%3A3%3AAYc2B6nN_8PwOUgla2ZxAwGyYhnLXypui8fyQtXpbQ"} #farzi_kalosxyz  246800   
 #a d
     proxies = (  
-    "http://ewyhwkqa:989msyg77vq2@185.199.229.156:7492",
-    "http://ewyhwkqa:989msyg77vq2@185.199.228.220:7300",
-    "http://ewyhwkqa:989msyg77vq2@185.199.231.45:8382",
-    "http://ewyhwkqa:989msyg77vq2@188.74.210.207:6286",
-    "http://ewyhwkqa:989msyg77vq2@188.74.183.10:8279",
-    "http://ewyhwkqa:989msyg77vq2@188.74.210.21:6100",
-    "http://ewyhwkqa:989msyg77vq2@45.155.68.129:8133",
-    "http://ewyhwkqa:989msyg77vq2@154.95.36.199:6893",
-    "http://ewyhwkqa:989msyg77vq2@45.94.47.66:8110"
+    "http://58.124.251.164/",
+   #  "http://ewyhwkqa:989msyg77vq2@185.199.229.156:7492",
+   #  "http://ewyhwkqa:989msyg77vq2@185.199.228.220:7300",
+   #  "http://ewyhwkqa:989msyg77vq2@185.199.231.45:8382",
+   #  "http://ewyhwkqa:989msyg77vq2@188.74.210.207:6286",
+   #  "http://ewyhwkqa:989msyg77vq2@188.74.183.10:8279",
+   #  "http://ewyhwkqa:989msyg77vq2@188.74.210.21:6100",
+   #  "http://ewyhwkqa:989msyg77vq2@45.155.68.129:8133",
+   #  "http://ewyhwkqa:989msyg77vq2@154.95.36.199:6893",
+   #  "http://ewyhwkqa:989msyg77vq2@45.94.47.66:8110"
 
     )
-    pr_oxy = [0,1,2,3,4,5,6,7,8]
+    pr_oxy = [0]
     index = random.choice(pr_oxy)
     proxyDict = {"http" : proxies[index], "https" : proxies[index]}
     c= [a,e,f,g]
@@ -414,7 +415,7 @@ def reels():
       separator = "/"
 
       cut_story = cut_s.split(separator, 1)[0]  
-      user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
+      user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar,).json()
       uniqid = user_id["user"]["id"] 
       user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
  
@@ -435,7 +436,7 @@ def reels():
          cut_s = target[31:]
          separator = "/"
          cut_reel = cut_s.split(separator, 1)[0] 
-         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers, cookies=cookie_jar).json()
+         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers,).json()
          meta = {
                   "posts": user_id_req,
                   "cookie_jar":cookie_jar,
