@@ -478,7 +478,6 @@ def reels():
          response = requests.request("GET", url, headers=headers, params=querystring).json()
        
          return (response)
-      # return jsonify(meta)
     else:   
       cut_story= target
       
@@ -487,24 +486,16 @@ def reels():
       user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
  
       is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
-    #   uniqid = user_id["graphql"]["user"]["id"] 
       if is_priv == True:
          meta = {
         "account": is_priv,
        }
       elif is_priv == False:   
-    #    user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
        meta = {
         "story": user_id_req,
         "uniqid":uniqid,
         "account": is_priv,
        }   
-    # if target[:32] == "https://www.youtube.com/watch?v=" or target[:31] == "https://www.youtube.com/shorts/" or target[:27] == "https://youtube.com/shorts/" or target[:17] == "https://youtu.be/":
-    
-    #    return (response.json())
-        
-    # else:
-
     return jsonify(meta)
 # driver function
 
