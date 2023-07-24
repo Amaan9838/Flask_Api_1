@@ -353,7 +353,7 @@ def scrap_reels():
        return jsonify(meta)
 #http://127.0.0.1:5000/home?source=https://www.facebook.com/watch?v=1245895546280667
 @application.route("/story", methods = ["GET"])
-@cache.cached(timeout=1284300, key_prefix=lambda: request.full_path)
+@cache.cached(timeout=14300, key_prefix=lambda: request.full_path)
 def reels():
     a = {"csrftoken":"JIzYAn9hVRjoDdNIQnLsqFCoVouO1WMC","sessionid":"53168773914%3AD0YRVq8KvrDZCf%3A15%3AAYeyRlmOZf2XHeCEuLrRfccq-JNAPqUO9PMiBSRIsA"}#rocky__8081  Ashar123
     b =  {"csrftoken":"1jwyJ5QczmCIva5ROe2OOj8opDwazXL3","sessionid":"36744979802%3AmISFYgnEY22rzr%3A20%3AAYc4E5uksgDF77ikhfeHkkTbGplkf92-acsJYzzptQ"} #farzi_kalosxyz  246800
@@ -478,6 +478,7 @@ def reels():
          response = requests.request("GET", url, headers=headers, params=querystring).json()
        
          return (response)
+      # return jsonify(meta)
     else:   
       cut_story= target
       
@@ -486,16 +487,24 @@ def reels():
       user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
  
       is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
+    #   uniqid = user_id["graphql"]["user"]["id"] 
       if is_priv == True:
          meta = {
         "account": is_priv,
        }
       elif is_priv == False:   
+    #    user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
        meta = {
         "story": user_id_req,
         "uniqid":uniqid,
         "account": is_priv,
        }   
+    # if target[:32] == "https://www.youtube.com/watch?v=" or target[:31] == "https://www.youtube.com/shorts/" or target[:27] == "https://youtube.com/shorts/" or target[:17] == "https://youtu.be/":
+    
+    #    return (response.json())
+        
+    # else:
+
     return jsonify(meta)
 # driver function
 
