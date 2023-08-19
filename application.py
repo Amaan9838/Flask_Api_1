@@ -478,8 +478,8 @@ def reels():
          headers = {
                   # "Content-Type": "application/json",  # If needed
                   # "User-Agent" :"com.google.android.youtube/",
-                  # "User-Agent" :"com.google.android.youtube/",
-                  "User-Agent" : "com.google.android.youtube/17.36.4 (Linux; U; Android 12; GB) gzip",
+                  "User-Agent" :"com.google.android.youtube/",
+                  # "User-Agent" : "com.google.android.youtube/17.36.4 (Linux; U; Android 12; GB) gzip",
                               }
 
          response = requests.post(url, json=payload, headers=headers).json()
