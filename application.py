@@ -483,6 +483,36 @@ def reels():
                               }
 
          response = requests.post(url, json=payload, headers=headers).json()
+         duration = response['videoDetails']['lengthSeconds']
+         duration = float(duration)
+         if duration > 60  and duration <= 3600:
+            minute = (duration/60)
+            sec = round((minute%1)*60)
+            sec = str(sec)
+            if len(str(sec)) == 1:
+               minute = str(int(minute))
+               length = ":0".join([minute, sec])
+            else:    
+               minute = str(int(minute))
+               length = ":".join([minute, sec])
+         elif len(str(duration)) >= 4:
+            hr = (duration/60)/60
+            sec = round(((duration/60)%1)*60)
+            nt = round((hr%1)*60)
+            minute = str(nt)
+            sec = str(sec)
+            hr = str(int(hr))
+            lengthh = ":".join([hr, minute])
+            length =  ":".join([lengthh, sec])
+         elif duration == 60:
+            length = duration/60
+            length = str(round(length))+":00"     
+         else:
+            length = "00:"+str(duration) 
+         meta = {
+            "response":response,
+            "length":length,
+         }
       # return jsonify(meta)
     else:   
       cut_story= target
@@ -506,7 +536,7 @@ def reels():
        }   
     if target[:32] == "https://www.youtube.com/watch?v=" or target[:31] == "https://www.youtube.com/shorts/" or target[:27] == "https://youtube.com/shorts/" or target[:17] == "https://youtu.be/":
     
-       return (response)
+       return (meta)
         
     else:
 
