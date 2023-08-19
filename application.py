@@ -467,17 +467,22 @@ def reels():
          # video = YouTube(url,use_oauth=True, allow_oauth_cache=False)
       # cut = target[-11:]
          cut = target[-11:]
-         url = "https://youtube-video-download-info.p.rapidapi.com/dl"
-
-         querystring = {"id": cut}
-
+         url = "https://www.youtube.com/youtubei/v1/player?key=AIzaSyA8eiZmM1FaDVjRy-df2KTyQ_vz_yYM39w"
+         payload = {
+                  "videoId": cut,
+                  "context": {
+                     "client": {
+                           "clientName": "ANDROID",
+                           "clientVersion": "17.31.35",
+                           "androidSdkVersion": 30} }}
          headers = {
-	 "X-RapidAPI-Key": "6e7e0e613dmsh7da1932734a8a9ap14bcb6jsn4c51c4a9f466",
-	 "X-RapidAPI-Host": "youtube-video-download-info.p.rapidapi.com"
-       }
-         response = requests.request("GET", url, headers=headers, params=querystring).json()
-       
-         return (response)
+                  # "Content-Type": "application/json",  # If needed
+                  # "User-Agent" :"com.google.android.youtube/",
+                  # "User-Agent" :"com.google.android.youtube/",
+                  "User-Agent" : "com.google.android.youtube/17.36.4 (Linux; U; Android 12; GB) gzip",
+                              }
+
+         response = requests.post(url, json=payload, headers=headers).json()
       # return jsonify(meta)
     else:   
       cut_story= target
@@ -499,13 +504,13 @@ def reels():
         "uniqid":uniqid,
         "account": is_priv,
        }   
-    # if target[:32] == "https://www.youtube.com/watch?v=" or target[:31] == "https://www.youtube.com/shorts/" or target[:27] == "https://youtube.com/shorts/" or target[:17] == "https://youtu.be/":
+    if target[:32] == "https://www.youtube.com/watch?v=" or target[:31] == "https://www.youtube.com/shorts/" or target[:27] == "https://youtube.com/shorts/" or target[:17] == "https://youtu.be/":
     
-    #    return (response.json())
+       return (response)
         
-    # else:
+    else:
 
-    return jsonify(meta)
+      return jsonify(meta)
 # driver function
 
 if __name__ == "__main__":
