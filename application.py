@@ -467,7 +467,7 @@ def reels():
          # video = YouTube(url,use_oauth=True, allow_oauth_cache=False)
       # cut = target[-11:]
          cut = target[-11:]
-         url = "https://www.youtube.com/youtubei/v1/player?key=AIzaSyA8eiZmM1FaDVjRy-df2KTyQ_vz_yYM39w"
+         url = "https://www.youtube.com/youtubei/v1/player?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8"
          payload = {
                   "videoId": cut,
                   "context": {
