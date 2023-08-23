@@ -11,6 +11,7 @@ from datetime import datetime
 import requests
 import youtube_dl
 import random 
+import re
 from custom_youtube import CustomYouTube
 
 # creating a Flask app
@@ -142,7 +143,11 @@ def scrap_reels():
             "ytdll": info,
         }
     else:
-         cut = target[-11:]
+         patterns =  [r'\?v=([A-Za-z0-9_-]+)', r'youtu\.be/([A-Za-z0-9_-]+)',  r'shorts/([A-Za-z0-9_-]+)', r'live/([A-Za-z0-9_-]+)',r'embed/([A-Za-z0-9_-]+)' ]
+         for pattern in patterns:
+            match = re.search(pattern, target)
+            if match:
+               cut = match.group(1)
          url = "https://www.youtube.com/youtubei/v1/player?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8"
          payload = {
                   "videoId": cut,
@@ -188,7 +193,7 @@ def scrap_reels():
             "length":length,
          }
          return jsonify(meta)       
-    if target[:32] == "https://www.youtube.com/watch?v=" or target[:31] == "https://www.youtube.com/shorts/" or target[:27] == "https://youtube.com/shorts/" or target[:17] == "https://youtu.be/" or target[:29] == "https://www.youtube.com/live/": 
+    if target[:32] == "https://www.youtube.com/watch?v=" or target[:31] == "https://www.youtube.com/shorts/" or target[:27] == "https://youtube.com/shorts/" or target[:17] == "https://youtu.be/" or target[:30] == "https://www.youtube.com/embed/" or  target[:29] == "https://www.youtube.com/live/" or target[:22] == "https://m.youtube.com/":
        return jsonify(meta)   
     else:
 
