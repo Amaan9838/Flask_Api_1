@@ -547,10 +547,7 @@ def reels():
 
       return jsonify(meta)
 # driver function
-@application.route('/client')
-def get_client_ip():
-    client_ip = request.remote_addr
-    return f"Client's IP Address: {client_ip}"
+
 if __name__ == "__main__":
 
 	application.run(debug = True)
