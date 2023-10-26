@@ -604,6 +604,7 @@ def audio():
       for item in items:
         if item["id"][:19] == numbers:
          audio = item["video_dash_manifest"]
+         thumbnail = item["image_versions2"]["candidates"][0]["url"]
          pattern = r'<AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/><BaseURL>(.*?)<\/BaseURL>'
          match = re.search(pattern, audio)
          audio_url = match.group(1)
@@ -619,7 +620,8 @@ def audio():
         "story": user_id_req,
         "uniqid":uniqid,
         "account": is_priv,
-        "audio_url": url
+        "audio_url": url,
+        "thumbnail": thumbnail,
        }  
        return jsonify(meta)    
     elif target[:30] == "https://instagram.com/stories/" :
@@ -643,6 +645,7 @@ def audio():
       for item in items:
         if item["id"][:19] == numbers:
          audio = item["video_dash_manifest"]
+         thumbnail = item["image_versions2"]["candidates"][0]["url"]
          pattern = r'<AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/><BaseURL>(.*?)<\/BaseURL>'
          match = re.search(pattern, audio)
          audio_url = match.group(1)
@@ -658,8 +661,10 @@ def audio():
         "story": user_id_req,
         "uniqid":uniqid,
         "account": is_priv,
-        "audio_url": url
-       } 
+        "audio_url": url,
+       "thumbnail":thumbnail,
+       }
+       return jsonify(meta) 
     elif target[:31] == "https://www.instagram.com/reel/" :
          cut_s = target[31:]
          separator = "/"
