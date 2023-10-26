@@ -547,6 +547,153 @@ def reels():
 
       return jsonify(meta)
 # driver function
+
+@application.route("/audio", methods = ["GET"])
+@cache.cached(timeout=87000, key_prefix=lambda: request.full_path)
+def audio():
+    a = {"csrftoken":"JIzYAn9hVRjoDdNIQnLsqFCoVouO1WMC","sessionid":"53168773914%3AD0YRVq8KvrDZCf%3A15%3AAYeyRlmOZf2XHeCEuLrRfccq-JNAPqUO9PMiBSRIsA"}#rocky__8081  Ashar123
+    b =  {"csrftoken":"1jwyJ5QczmCIva5ROe2OOj8opDwazXL3","sessionid":"36744979802%3AmISFYgnEY22rzr%3A20%3AAYc4E5uksgDF77ikhfeHkkTbGplkf92-acsJYzzptQ"} #farzi_kalosxyz  246800
+    d =  {"csrftoken":"dv7osDMXDhLX2lTOsbPPnQ4gBNDPsG3O","sessionid":"58499749216%3AnDhC7Z4zEP6AWi%3A17%3AAYeZCANvuq3KMl40YjQNMB_GLZS5VkIKpGmVO_BqtQ"} #amsterdam34158 Amaan@123
+    e =  {"csrftoken":"A6ledrZ83DJGCvmDYfF3vTIHQG1LOaCJ","sessionid":"53168773914%3Aafljno0aL18bpZ%3A23%3AAYcQfhhvaU7HHcy3YwKtp0x5bUbznwbsyqeKNMtYvw"}   #farzi_kalosxyz 246800
+    f =  {"csrftoken":"yG0qeT6AdwIO2gUFLGSjvtYFYxhwA8eO","sessionid":"53168773914%3AiTndpEqqT0utPz%3A26%3AAYfZvE4oVH6l2zLFObt5svVqXXKFFJoAVk0uZ0pFjg"} #farzi_kalosxyz  246800   
+    g =  {"csrftoken":"0KDtcmLuS6S5piO0dJkTLZd5J8SAb8o3","sessionid":"53168773914%3Ag8rfaOhrydC3XF%3A3%3AAYc2B6nN_8PwOUgla2ZxAwGyYhnLXypui8fyQtXpbQ"} #farzi_kalosxyz  246800   
+    proxies = (  
+    "http://58.124.251.164/",
+   #  "http://ewyhwkqa:989msyg77vq2@185.199.229.156:7492",
+   #  "http://ewyhwkqa:989msyg77vq2@185.199.228.220:7300",
+   #  "http://ewyhwkqa:989msyg77vq2@185.199.231.45:8382",
+   #  "http://ewyhwkqa:989msyg77vq2@188.74.210.207:6286",
+   #  "http://ewyhwkqa:989msyg77vq2@188.74.183.10:8279",
+   #  "http://ewyhwkqa:989msyg77vq2@188.74.210.21:6100",
+   #  "http://ewyhwkqa:989msyg77vq2@45.155.68.129:8133",
+   #  "http://ewyhwkqa:989msyg77vq2@154.95.36.199:6893",
+   #  "http://ewyhwkqa:989msyg77vq2@45.94.47.66:8110"
+
+    )
+    pr_oxy = [0]
+    index = random.choice(pr_oxy)
+    proxyDict = {"http" : proxies[index], "https" : proxies[index]}
+    c= [a,e,f,g]
+    cookie_jar = random.choice(c)
+    headers = {
+            "user-agent": "Mozilla/5.0 (Linux; Android 8.1.0; motorola one Build/OPKS28.63-18-3; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/70.0.3538.80 Mobile Safari/537.36 Instagram 72.0.0.21.98 Android (27/8.1.0; 320dpi; 720x1362; motorola; motorola one; deen_sprout; qcom; pt_BR; 132081645)"
+         }
+    csrf_token = cookie_jar["csrftoken"]
+    session_id = cookie_jar["sessionid"]
+     
+    source = request.args["source"] 
+    target = format(source)
+    if target[:34] == "https://www.instagram.com/stories/" :
+      cut_s = target[34:]
+      separator = "/"
+
+      cut_story = cut_s.split(separator, 1)[0]  
+      user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
+      uniqid = user_id["user"]["id"] 
+      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
+ 
+      is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
+      pattern = r'\d+'
+      match = re.search(pattern, target)
+      if match:
+         numbers = match.group()
+         print(numbers)
+      else:
+         print("No numbers found in the URL.")
+      items = user_id_req["reels"][uniqid]["items"]
+      for item in items:
+        if item["id"][:19] == numbers:
+         audio = item["video_dash_manifest"]
+         pattern = r'<AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/><BaseURL>(.*?)<\/BaseURL>'
+         match = re.search(pattern, audio)
+         audio_url = match.group(1)
+         url = re.sub(r'&amp;', '&', audio_url)
+    #   uniqid = user_id["graphql"]["user"]["id"] 
+      if is_priv == True:
+         meta = {
+        "account": is_priv,
+       }
+      elif is_priv == False:   
+    #    user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
+       meta = {
+        "story": user_id_req,
+        "uniqid":uniqid,
+        "account": is_priv,
+        "audio_url": url
+       }  
+       return jsonify(meta)    
+    elif target[:30] == "https://instagram.com/stories/" :
+      cut_s = target[30:]
+      separator = "/"
+
+      cut_story = cut_s.split(separator, 1)[0]  
+      user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar,).json()
+      uniqid = user_id["user"]["id"] 
+      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
+ 
+      is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
+      pattern = r'\d+'
+      match = re.search(pattern, target)
+      if match:
+         numbers = match.group()
+         print(numbers)
+      else:
+         print("No numbers found in the URL.")
+      items = user_id_req["reels"][uniqid]["items"]
+      for item in items:
+        if item["id"][:19] == numbers:
+         audio = item["video_dash_manifest"]
+         pattern = r'<AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/><BaseURL>(.*?)<\/BaseURL>'
+         match = re.search(pattern, audio)
+         audio_url = match.group(1)
+         url = re.sub(r'&amp;', '&', audio_url)
+    #   uniqid = user_id["graphql"]["user"]["id"] 
+      if is_priv == True:
+         meta = {
+        "account": is_priv,
+       }
+      elif is_priv == False:   
+    #    user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
+       meta = {
+        "story": user_id_req,
+        "uniqid":uniqid,
+        "account": is_priv,
+        "audio_url": url
+       } 
+    elif target[:31] == "https://www.instagram.com/reel/" :
+         cut_s = target[31:]
+         separator = "/"
+         cut_reel = cut_s.split(separator, 1)[0] 
+         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers, cookies=cookie_jar,).json()
+         audio = user_id_req["data"]["shortcode_media"]["dash_info"]["video_dash_manifest"]
+         pattern = r'<AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/><BaseURL>(.*?)<\/BaseURL>'
+         match = re.search(pattern, audio)
+         audio_url = match.group(1)
+         url = re.sub(r'&amp;', '&', audio_url)
+         meta = {
+                  "posts": user_id_req,
+                  "cookie_jar":cookie_jar,
+                  "ip": proxyDict,
+                  "audio_url": url,
+               }  
+         return jsonify(meta)          
+    elif target[:32] == "https://www.instagram.com/reels/" :
+         cut_s = target[32:]
+         separator = "/"
+         cut_reel = cut_s.split(separator, 1)[0] 
+         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers ,cookies=cookie_jar).json()
+         audio = user_id_req["data"]["shortcode_media"]["dash_info"]["video_dash_manifest"]
+         pattern = r'<AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/><BaseURL>(.*?)<\/BaseURL>'
+         match = re.search(pattern, audio)
+         audio_url = match.group(1)
+         url = re.sub(r'&amp;', '&', audio_url)
+         meta = {
+                  "posts": user_id_req,
+                  "cookie_jar":cookie_jar,
+                  "ip": proxyDict,
+                  "audio_url": url,
+               }  
+         return jsonify(meta)    
 @application.route("/yt", methods = ["GET"])
 # @cache.cached(timeout=87000, key_prefix=lambda: request.full_path)
 def youtube():
