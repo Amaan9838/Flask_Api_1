@@ -359,7 +359,7 @@ def reels():
       streams_240p_mp4 = video.streams.filter(progressive=False,res='240p',mime_type='video/mp4')
       streams_144p_mp4 = video.streams.filter(progressive=False,res='144p',mime_type='video/mp4')
       streams_audio_128 = video.streams.filter(progressive=False,mime_type='audio/mp4', abr='128kbps')
-      streams_audio_48 = video.streams.filter(progressive=False,mime_type='audio/mp4', abr='48kbps')
+      # streams_audio_48 = video.streams.filter(progressive=False,mime_type='audio/mp4', abr='48kbps')
       if len(streams_2160p_mp4) > 0 :
          meta = {'adaptive_formats_mp4':{ 
                         '0':{
@@ -399,10 +399,13 @@ def reels():
                         'url': streams_144p.first().url,},'audio_128':{
                         'quality': '128kbps',
                         'mime_type': 'audio/mp4',
-                        'url': streams_audio_128.first().url, },'audio_48':{
-                        'quality': '48kbps',
-                        'mime_type': 'audio/mp4',
-                        'url': streams_audio_48.first().url, },},
+                        'url': streams_audio_128.first().url, },
+                        # 'audio_48':{
+                        # 'quality': '48kbps',
+                        # 'mime_type': 'audio/mp4',
+                        # 'url': streams_audio_48.first().url,
+                        #  },
+                        },
                     'title': title,
                     'duration': length,
                      'id':thumbnail ,}
@@ -439,10 +442,12 @@ def reels():
                         'url': streams_144p.first().url,},'audio_128':{
                         'quality': '128kbps',
                         'mime_type': 'audio/mp4',
-                        'url': streams_audio_128.first().url,},'audio_48':{
-                        'quality': '48kbps',
-                        'mime_type': 'audio/mp4',
-                        'url': streams_audio_48.first().url,},},
+                        'url': streams_audio_128.first().url,},
+                        # 'audio_48':{
+                        # 'quality': '48kbps',
+                        # 'mime_type': 'audio/mp4',
+                        # 'url': streams_audio_48.first().url,},
+                        },
                     'title': title,
                     'duration': length,
                      'id':thumbnail ,}
@@ -476,10 +481,12 @@ def reels():
                         'url': streams_144p.first().url,},'audio_128':{
                         'quality': '128kbps',
                         'mime_type': 'audio/mp4',
-                        'url': streams_audio_128.first().url,},'audio_48':{
-                        'quality': '48kbps',
-                        'mime_type': 'audio/mp4',
-                        'url': streams_audio_48.first().url,},},
+                        'url': streams_audio_128.first().url,},
+                        # 'audio_48':{
+                        # 'quality': '48kbps',
+                        # 'mime_type': 'audio/mp4',
+                        # 'url': streams_audio_48.first().url,},
+                        },
                     'title': title,
                     'duration': length,
                      'id':thumbnail ,}
@@ -508,10 +515,12 @@ def reels():
                         'url': streams_144p.first().url,},'audio_128':{
                         'quality': '128kbps',
                         'mime_type': 'audio/mp4',
-                        'url': streams_audio_128.first().url,},'audio_48':{
-                        'quality': '48kbps',
-                        'mime_type': 'audio/mp4',
-                        'url': streams_audio_48.first().url,}, },
+                        'url': streams_audio_128.first().url,},
+                        # 'audio_48':{
+                        # 'quality': '48kbps',
+                        # 'mime_type': 'audio/mp4',
+                        # 'url': streams_audio_48.first().url,},
+                         },
                     'title': title,
                     'duration': length,
                      'id':thumbnail ,
