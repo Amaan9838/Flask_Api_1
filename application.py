@@ -13,6 +13,7 @@ import youtube_dl
 import random 
 import re
 from custom_youtube import CustomYouTube
+from requests.auth import HTTPProxyAuth
 
 # creating a Flask app
 application= Flask(__name__)
@@ -209,6 +210,14 @@ def reels():
     f =  {"csrftoken":"yG0qeT6AdwIO2gUFLGSjvtYFYxhwA8eO","sessionid":"53168773914%3AiTndpEqqT0utPz%3A26%3AAYfZvE4oVH6l2zLFObt5svVqXXKFFJoAVk0uZ0pFjg"} #farzi_kalosxyz  246800   
     g =  {"csrftoken":"0KDtcmLuS6S5piO0dJkTLZd5J8SAb8o3","sessionid":"53168773914%3Ag8rfaOhrydC3XF%3A3%3AAYc2B6nN_8PwOUgla2ZxAwGyYhnLXypui8fyQtXpbQ"} #farzi_kalosxyz  246800   
 #a d
+    proxy_host = 'pr.t18hj41c.lunaproxy.net'
+    proxy_port = '12233'
+    proxy_username = 'user-lu9324029'
+    proxy_password = 'Aa900009'
+    proxy_auth = HTTPProxyAuth(proxy_username, proxy_password)
+    proxy = {
+    'http': f'http://{proxy_username}:{proxy_password}@{proxy_host}:{proxy_port}',
+     }
     proxies = (  
     "http://58.124.251.164/",
    #  "http://ewyhwkqa:989msyg77vq2@185.199.229.156:7492",
@@ -240,9 +249,9 @@ def reels():
       separator = "/"
 
       cut_story = cut_s.split(separator, 1)[0]  
-      user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
+      user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, proxies=proxy, auth=proxy_auth ).json()
       uniqid = user_id["user"]["id"] 
-      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
+      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, proxies=proxy, auth=proxy_auth ).json()
  
       is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
     #   uniqid = user_id["graphql"]["user"]["id"] 
@@ -251,7 +260,7 @@ def reels():
         "account": is_priv,
        }
       elif is_priv == False:   
-    #    user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
+    #    user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, proxies=proxy, auth=proxy_auth ).json()
        meta = {
         "story": user_id_req,
         "uniqid":uniqid,
@@ -262,9 +271,9 @@ def reels():
       separator = "/"
 
       cut_story = cut_s.split(separator, 1)[0]  
-      user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar,).json()
+      user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, proxies=proxy, auth=proxy_auth).json()
       uniqid = user_id["user"]["id"] 
-      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
+      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, proxies=proxy, auth=proxy_auth ).json()
  
       is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
     #   uniqid = user_id["graphql"]["user"]["id"] 
@@ -273,7 +282,7 @@ def reels():
         "account": is_priv,
        }
       elif is_priv == False:   
-    #    user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
+    #    user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, proxies=proxy, auth=proxy_auth ).json()
        meta = {
         "story": user_id_req,
         "uniqid":uniqid,
@@ -283,7 +292,7 @@ def reels():
          cut_s = target[31:]
          separator = "/"
          cut_reel = cut_s.split(separator, 1)[0] 
-         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers, cookies=cookie_jar,).json()
+         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers, cookies=cookie_jar, proxies=proxy, auth=proxy_auth ).json()
          meta = {
                   "posts": user_id_req,
                   "cookie_jar":cookie_jar,
@@ -293,7 +302,7 @@ def reels():
          cut_s = target[32:]
          separator = "/"
          cut_reel = cut_s.split(separator, 1)[0] 
-         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers ,cookies=cookie_jar).json()
+         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers ,cookies=cookie_jar, proxies=proxy, auth=proxy_auth).json()
          meta = {
                   "posts": user_id_req,
                   "cookie_jar":cookie_jar,
@@ -531,9 +540,9 @@ def reels():
     else:   
       cut_story= target
       
-      user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
+      user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, proxies=proxy, auth=proxy_auth ).json()
       uniqid = user_id["user"]["id"] 
-      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
+      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, proxies=proxy, auth=proxy_auth ).json()
  
       is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
     #   uniqid = user_id["graphql"]["user"]["id"] 
@@ -542,7 +551,7 @@ def reels():
         "account": is_priv,
        }
       elif is_priv == False:   
-    #    user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
+    #    user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, proxies=proxy, auth=proxy_auth ).json()
        meta = {
         "story": user_id_req,
         "uniqid":uniqid,
@@ -597,9 +606,9 @@ def audio():
       separator = "/"
 
       cut_story = cut_s.split(separator, 1)[0]  
-      user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, ).json()
+      user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, proxies=proxy, auth=proxy_auth ).json()
       uniqid = user_id["user"]["id"] 
-      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
+      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, proxies=proxy, auth=proxy_auth ).json()
  
       is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
       pattern = r'\d+'
@@ -624,7 +633,7 @@ def audio():
         "account": is_priv,
        }
       elif is_priv == False:   
-    #    user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
+    #    user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, proxies=proxy, auth=proxy_auth ).json()
        meta = {
         "story": user_id_req,
         "uniqid":uniqid,
@@ -638,9 +647,9 @@ def audio():
       separator = "/"
 
       cut_story = cut_s.split(separator, 1)[0]  
-      user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar,).json()
+      user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, proxies=proxy, auth=proxy_auth).json()
       uniqid = user_id["user"]["id"] 
-      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
+      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, proxies=proxy, auth=proxy_auth ).json()
  
       is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
       pattern = r'\d+'
@@ -665,7 +674,7 @@ def audio():
         "account": is_priv,
        }
       elif is_priv == False:   
-    #    user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, ).json()
+    #    user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, proxies=proxy, auth=proxy_auth ).json()
        meta = {
         "story": user_id_req,
         "uniqid":uniqid,
@@ -678,7 +687,7 @@ def audio():
          cut_s = target[31:]
          separator = "/"
          cut_reel = cut_s.split(separator, 1)[0] 
-         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers, cookies=cookie_jar,).json()
+         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers, cookies=cookie_jar, proxies=proxy, auth=proxy_auth).json()
          audio = user_id_req["data"]["shortcode_media"]["dash_info"]["video_dash_manifest"]
          pattern = r'<AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/><BaseURL>(.*?)<\/BaseURL>'
          match = re.search(pattern, audio)
