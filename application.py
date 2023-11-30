@@ -210,14 +210,18 @@ def reels():
     f =  {"csrftoken":"yG0qeT6AdwIO2gUFLGSjvtYFYxhwA8eO","sessionid":"53168773914%3AiTndpEqqT0utPz%3A26%3AAYfZvE4oVH6l2zLFObt5svVqXXKFFJoAVk0uZ0pFjg"} #farzi_kalosxyz  246800   
     g =  {"csrftoken":"0KDtcmLuS6S5piO0dJkTLZd5J8SAb8o3","sessionid":"53168773914%3Ag8rfaOhrydC3XF%3A3%3AAYc2B6nN_8PwOUgla2ZxAwGyYhnLXypui8fyQtXpbQ"} #farzi_kalosxyz  246800   
 #a d
-    proxy_host = 'pr.t18hj41c.lunaproxy.net'
-    proxy_port = '12233'
-    proxy_username = 'user-lu9324029'
-    proxy_password = 'Aa900009'
+   #  proxy_host = 'pr.t18hj41c.lunaproxy.net'
+   #  proxy_port = '12233'
+   #  proxy_username = 'user-lu9324029'
+   #  proxy_password = 'Aa900009'
+    proxy_host = 'p.webshare.io'
+    proxy_port = '80'
+    proxy_username = 'xlqlutuh-rotate'
+    proxy_password = 'g64kgmh8afoh'
     proxy_auth = HTTPProxyAuth(proxy_username, proxy_password)
     proxy = {
-    'http': f'http://{proxy_username}:{proxy_password}@{proxy_host}:{proxy_port}',
-    'https': f'http://{proxy_username}:{proxy_password}@{proxy_host}:{proxy_port}',
+    'http': f'http://{proxy_username}:{proxy_password}@{proxy_host}:{proxy_port}/',
+    'https': f'http://{proxy_username}:{proxy_password}@{proxy_host}:{proxy_port}/',
      }
     proxies = (  
     "http://58.124.251.164/",
