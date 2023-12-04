@@ -226,15 +226,6 @@ def reels():
     proxies = (  
     "http://58.124.251.164/",
    #  "http://ewyhwkqa:989msyg77vq2@185.199.229.156:7492",
-   #  "http://ewyhwkqa:989msyg77vq2@185.199.228.220:7300",
-   #  "http://ewyhwkqa:989msyg77vq2@185.199.231.45:8382",
-   #  "http://ewyhwkqa:989msyg77vq2@188.74.210.207:6286",
-   #  "http://ewyhwkqa:989msyg77vq2@188.74.183.10:8279",
-   #  "http://ewyhwkqa:989msyg77vq2@188.74.210.21:6100",
-   #  "http://ewyhwkqa:989msyg77vq2@45.155.68.129:8133",
-   #  "http://ewyhwkqa:989msyg77vq2@154.95.36.199:6893",
-   #  "http://ewyhwkqa:989msyg77vq2@45.94.47.66:8110"
-
     )
     pr_oxy = [0]
     index = random.choice(pr_oxy)
@@ -254,9 +245,9 @@ def reels():
       separator = "/"
 
       cut_story = cut_s.split(separator, 1)[0]  
-      user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, proxies=proxy ).json()
+      user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, proxies=proxy).json()
       uniqid = user_id["user"]["id"] 
-      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, proxies=proxy ).json()
+      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, proxies=proxy).json()
  
       is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
     #   uniqid = user_id["graphql"]["user"]["id"] 
@@ -278,7 +269,7 @@ def reels():
       cut_story = cut_s.split(separator, 1)[0]  
       user_id = requests.get(f"https://www.instagram.com/stories/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, proxies=proxy).json()
       uniqid = user_id["user"]["id"] 
-      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, proxies=proxy ).json()
+      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, proxies=proxy).json()
  
       is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
     #   uniqid = user_id["graphql"]["user"]["id"] 
@@ -297,7 +288,7 @@ def reels():
          cut_s = target[31:]
          separator = "/"
          cut_reel = cut_s.split(separator, 1)[0] 
-         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers, cookies=cookie_jar, proxies=proxy ).json()
+         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers, cookies=cookie_jar, proxies=proxy).json()
          meta = {
                   "posts": user_id_req,
                   "cookie_jar":cookie_jar,
