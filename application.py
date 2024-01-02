@@ -613,9 +613,9 @@ def audio():
       separator = "/"
 
       cut_story = cut_s.split(separator, 1)[0]  
-      user_id = requests.get(f"https://www.instagram.com/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar).json()
+      user_id = requests.get(f"https://www.instagram.com/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, auth=proxy_auth).json()
       uniqid = user_id["graphql"]["user"]["id"] 
-      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar).json()
+      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, auth=proxy_auth).json()
  
       is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
       pattern = r'\d+'
@@ -654,9 +654,9 @@ def audio():
       separator = "/"
 
       cut_story = cut_s.split(separator, 1)[0]  
-      user_id = requests.get(f"https://www.instagram.com/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar).json()
+      user_id = requests.get(f"https://www.instagram.com/{cut_story}/?__a=1&__d=dis",headers=headers, cookies=cookie_jar, auth=proxy_auth).json()
       uniqid = user_id["graphql"]["user"]["id"] 
-      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar).json()
+      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, auth=proxy_auth).json()
  
       is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
       pattern = r'\d+'
@@ -694,7 +694,7 @@ def audio():
          cut_s = target[31:]
          separator = "/"
          cut_reel = cut_s.split(separator, 1)[0] 
-         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers, cookies=cookie_jar).json()
+         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers, cookies=cookie_jar, auth=proxy_auth).json()
          audio = user_id_req["data"]["shortcode_media"]["dash_info"]["video_dash_manifest"]
          pattern = r'<AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/><BaseURL>(.*?)<\/BaseURL>'
          match = re.search(pattern, audio)
@@ -711,7 +711,7 @@ def audio():
          cut_s = target[32:]
          separator = "/"
          cut_reel = cut_s.split(separator, 1)[0] 
-         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers ,cookies=cookie_jar).json()
+         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers ,cookies=cookie_jar, auth=proxy_auth).json()
          audio = user_id_req["data"]["shortcode_media"]["dash_info"]["video_dash_manifest"]
          pattern = r'<AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/><BaseURL>(.*?)<\/BaseURL>'
          match = re.search(pattern, audio)
