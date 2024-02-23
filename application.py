@@ -209,11 +209,7 @@ def reels():
     e =  {"csrftoken":"A6ledrZ83DJGCvmDYfF3vTIHQG1LOaCJ","sessionid":"53168773914%3Aafljno0aL18bpZ%3A23%3AAYcQfhhvaU7HHcy3YwKtp0x5bUbznwbsyqeKNMtYvw"}   #farzi_kalosxyz 246800
     f =  {"csrftoken":"yG0qeT6AdwIO2gUFLGSjvtYFYxhwA8eO","sessionid":"53168773914%3AiTndpEqqT0utPz%3A26%3AAYfZvE4oVH6l2zLFObt5svVqXXKFFJoAVk0uZ0pFjg"} #farzi_kalosxyz  246800   
     g =  {"csrftoken":"0KDtcmLuS6S5piO0dJkTLZd5J8SAb8o3","sessionid":"53168773914%3Ag8rfaOhrydC3XF%3A3%3AAYc2B6nN_8PwOUgla2ZxAwGyYhnLXypui8fyQtXpbQ"} #farzi_kalosxyz  246800   
-#a d
-   #  proxy_host = 'pr.t18hj41c.lunaproxy.net'
-   #  proxy_port = '12233'
-   #  proxy_username = 'user-lu9324029'
-   #  proxy_password = 'Aa900009'
+
     proxy_host = 'p.webshare.io'
     proxy_port = '80'
     proxy_username = 'xlqlutuh-rotate'
@@ -223,9 +219,19 @@ def reels():
     'http': f'http://{proxy_username}:{proxy_password}@{proxy_host}:{proxy_port}/',
     'https': f'http://{proxy_username}:{proxy_password}@{proxy_host}:{proxy_port}/',
      }
+
     proxies = (  
     "http://58.124.251.164/",
    #  "http://ewyhwkqa:989msyg77vq2@185.199.229.156:7492",
+      #  "http://ewyhwkqa:989msyg77vq2@185.199.229.156:7492",
+   #  "http://ewyhwkqa:989msyg77vq2@185.199.228.220:7300",
+   #  "http://ewyhwkqa:989msyg77vq2@185.199.231.45:8382",
+   #  "http://ewyhwkqa:989msyg77vq2@188.74.210.207:6286",
+   #  "http://ewyhwkqa:989msyg77vq2@188.74.183.10:8279",
+   #  "http://ewyhwkqa:989msyg77vq2@188.74.210.21:6100",
+   #  "http://ewyhwkqa:989msyg77vq2@45.155.68.129:8133",
+   #  "http://ewyhwkqa:989msyg77vq2@154.95.36.199:6893",
+   #  "http://ewyhwkqa:989msyg77vq2@45.94.47.66:8110"
     )
     pr_oxy = [0]
     index = random.choice(pr_oxy)
