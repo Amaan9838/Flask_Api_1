@@ -210,17 +210,9 @@ def reels():
     f =  {"csrftoken":"yG0qeT6AdwIO2gUFLGSjvtYFYxhwA8eO","sessionid":"53168773914%3AiTndpEqqT0utPz%3A26%3AAYfZvE4oVH6l2zLFObt5svVqXXKFFJoAVk0uZ0pFjg"} #farzi_kalosxyz  246800   
     g =  {"csrftoken":"0KDtcmLuS6S5piO0dJkTLZd5J8SAb8o3","sessionid":"53168773914%3Ag8rfaOhrydC3XF%3A3%3AAYc2B6nN_8PwOUgla2ZxAwGyYhnLXypui8fyQtXpbQ"} #farzi_kalosxyz  246800   
 
-   #  proxy_host = 'p.webshare.io'
-   #  proxy_port = '80'
-   #  proxy_username = 'xlqlutuh-rotate'
-   #  proxy_password = 'g64kgmh8afoh'
-   #  proxy_auth = HTTPProxyAuth(proxy_username, proxy_password)
-   #  proxy = {
-   #  'http': f'http://{proxy_username}:{proxy_password}@{proxy_host}:{proxy_port}/',
-   #  'https': f'http://{proxy_username}:{proxy_password}@{proxy_host}:{proxy_port}/',
-   #   }
     proxy_host = 'us.premium-residential.geonode.com'
-    proxy_port = '9000'
+    c = [9000,9001,9002,9003,9004,9005,9006,9007,9008,9009,9010]
+    proxy_port = random.choice(c)
     proxy_username = 'geonode_YN5Sdft28N'
     proxy_password = '89736ca0-bfba-4f12-85d8-91e2af351d74'
     proxy_auth = HTTPProxyAuth(proxy_username, proxy_password)
@@ -598,18 +590,10 @@ def audio():
     e =  {"csrftoken":"A6ledrZ83DJGCvmDYfF3vTIHQG1LOaCJ","sessionid":"53168773914%3Aafljno0aL18bpZ%3A23%3AAYcQfhhvaU7HHcy3YwKtp0x5bUbznwbsyqeKNMtYvw"}   #farzi_kalosxyz 246800
     f =  {"csrftoken":"yG0qeT6AdwIO2gUFLGSjvtYFYxhwA8eO","sessionid":"53168773914%3AiTndpEqqT0utPz%3A26%3AAYfZvE4oVH6l2zLFObt5svVqXXKFFJoAVk0uZ0pFjg"} #farzi_kalosxyz  246800   
     g =  {"csrftoken":"0KDtcmLuS6S5piO0dJkTLZd5J8SAb8o3","sessionid":"53168773914%3Ag8rfaOhrydC3XF%3A3%3AAYc2B6nN_8PwOUgla2ZxAwGyYhnLXypui8fyQtXpbQ"} #farzi_kalosxyz  246800   
-    
-   #  proxy_host = 'p.webshare.io'
-   #  proxy_port = '80'
-   #  proxy_username = 'xlqlutuh-rotate'
-   #  proxy_password = 'g64kgmh8afoh'
-   #  proxy_auth = HTTPProxyAuth(proxy_username, proxy_password)
-   #  proxy = {
-   #  'http': f'http://{proxy_username}:{proxy_password}@{proxy_host}:{proxy_port}/',
-   #  'https': f'http://{proxy_username}:{proxy_password}@{proxy_host}:{proxy_port}/',
-   #   }
+   
     proxy_host = 'us.premium-residential.geonode.com'
-    proxy_port = '9000'
+    c = [9000,9001,9002,9003,9004,9005,9006,9007,9008,9009,9010]
+    proxy_port = random.choice(c)
     proxy_username = 'geonode_YN5Sdft28N'
     proxy_password = '89736ca0-bfba-4f12-85d8-91e2af351d74'
     proxy_auth = HTTPProxyAuth(proxy_username, proxy_password)
