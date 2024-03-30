@@ -219,7 +219,7 @@ def reels():
     proxy_host = 'p.webshare.io'
     proxy_port = '80'
     prefix = "xlqlutuh-us"
-    random_number = random.randint(1, 5000)
+    random_number = random.randint(1, 150000)
     proxy_username = f"{prefix}-{random_number}"
    #  proxy_username = 'xlqlutuh-us-1'
     proxy_password = 'g64kgmh8afoh'
