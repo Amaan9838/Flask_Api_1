@@ -255,17 +255,22 @@ def reels():
      
     source = request.args["source"] 
     target = format(source)
-    if target[:34] == "https://www.instagram.com/stories/" :
-      cut_s = target[34:]
-      separator = "/"
+    if target[:34] == "https://www.instagram.com/stories/" : 
+      while True:
+         cut_s = target[34:]
+         separator = "/"
 
-      cut_story = cut_s.split(separator, 1)[0]  
-      user_id = requests.get(f"https://i.instagram.com/api/v1/users/web_profile_info/?username={cut_story}",headers=headers, cookies=cookie_jar, proxies=proxy).json()
-      uniqid = user_id["data"]["user"]["id"] 
-      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, proxies=proxy).json()
- 
-      is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
-    #   uniqid = user_id["graphql"]["user"]["id"] 
+         cut_story = cut_s.split(separator, 1)[0]  
+         user_id_response = requests.get(f"https://i.instagram.com/api/v1/users/web_profile_info/?username={cut_story}",headers=headers, cookies=cookie_jar,proxies=proxy).json()
+         uniqid = user_id_response["data"]["user"]["id"]
+         user_id_req_response = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar,proxies=proxy).json()
+
+         is_priv = user_id_req_response["reels"][uniqid]['user']["is_private"]
+         if user_id_req_response["reels"] != "":
+           break  # Break the loop if status code is 200
+         elif user_id_req_response["reels"] == "":
+           continue  # Retry the request if status code is 304
+
       if is_priv == True:
          meta = {
         "account": is_priv,
@@ -273,21 +278,27 @@ def reels():
       elif is_priv == False:   
     #    user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar ).json()
        meta = {
-        "story": user_id_req,
+        "story": user_id_req_response,
         "uniqid":uniqid,
         "account": is_priv,
-       }      
+        "username": proxy_username,
+       }   
     elif target[:30] == "https://instagram.com/stories/" :
-      cut_s = target[30:]
-      separator = "/"
+      while True:
+         cut_s = target[30:]
+         separator = "/"
 
-      cut_story = cut_s.split(separator, 1)[0]  
-      user_id = requests.get(f"https://i.instagram.com/api/v1/users/web_profile_info/?username={cut_story}",headers=headers, cookies=cookie_jar, proxies=proxy).json()
-      uniqid = user_id["data"]["user"]["id"] 
-      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, proxies=proxy).json()
- 
-      is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
-    #   uniqid = user_id["graphql"]["user"]["id"] 
+         cut_story = cut_s.split(separator, 1)[0]  
+         user_id_response = requests.get(f"https://i.instagram.com/api/v1/users/web_profile_info/?username={cut_story}",headers=headers, cookies=cookie_jar,proxies=proxy).json()
+         uniqid = user_id_response["data"]["user"]["id"]
+         user_id_req_response = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar,proxies=proxy).json()
+
+         is_priv = user_id_req_response["reels"][uniqid]['user']["is_private"]
+         if user_id_req_response["reels"] != "":
+           break  # Break the loop if status code is 200
+         elif user_id_req_response["reels"] == "":
+           continue  # Retry the request if status code is 304
+
       if is_priv == True:
          meta = {
         "account": is_priv,
@@ -295,15 +306,16 @@ def reels():
       elif is_priv == False:   
     #    user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar ).json()
        meta = {
-        "story": user_id_req,
+        "story": user_id_req_response,
         "uniqid":uniqid,
         "account": is_priv,
-       } 
+        "username": proxy_username,
+       }   
     elif target[:31] == "https://www.instagram.com/reel/" :
          cut_s = target[31:]
          separator = "/"
          cut_reel = cut_s.split(separator, 1)[0] 
-         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers, cookies=cookie_jar, proxies=proxy).json()
+         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers, proxies=proxy).json()
          audio = user_id_req["data"]["shortcode_media"]["dash_info"]["video_dash_manifest"]
          pattern = r'<AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/><BaseURL>(.*?)<\/BaseURL>'
          match = re.search(pattern, audio)
@@ -335,7 +347,7 @@ def reels():
          cut_s = target[28:]
          separator = "/"
          cut_reel = cut_s.split(separator, 1)[0] 
-         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers ,cookies=cookie_jar, proxies=proxy).json()
+         user_id_req = requests.get(f"https://www.instagram.com/graphql/query?query_hash=2b0673e0dc4580674a88d426fe00ea90&variables=%7B%22shortcode%22%3A%22{cut_reel}%22%7D",headers=headers , proxies=proxy).json()
          meta = {
             "posts": user_id_req,
             }         
@@ -561,14 +573,19 @@ def reels():
 
       # return jsonify(meta)
     else:   
-      cut_story= target
-      
-      user_id = requests.get(f"https://i.instagram.com/api/v1/users/web_profile_info/?username={cut_story}",headers=headers, cookies=cookie_jar, proxies=proxy).json()
-      uniqid = user_id["data"]["user"]["id"] 
-      user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar, proxies=proxy).json()
- 
-      is_priv = user_id_req["reels"][uniqid]['user']["is_private"]
-    #   uniqid = user_id["graphql"]["user"]["id"] 
+      while True:
+         cut_story= target
+
+         user_id_response = requests.get(f"https://i.instagram.com/api/v1/users/web_profile_info/?username={cut_story}",headers=headers, cookies=cookie_jar,proxies=proxy).json()
+         uniqid = user_id_response["data"]["user"]["id"]
+         user_id_req_response = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar,proxies=proxy).json()
+
+         is_priv = user_id_req_response["reels"][uniqid]['user']["is_private"]
+         if user_id_req_response["reels"] != "":
+           break  # Break the loop if status code is 200
+         elif user_id_req_response["reels"] == "":
+           continue  # Retry the request if status code is 304
+
       if is_priv == True:
          meta = {
         "account": is_priv,
@@ -576,9 +593,10 @@ def reels():
       elif is_priv == False:   
     #    user_id_req = requests.get(f"https://www.instagram.com/api/v1/feed/reels_media/?reel_ids={uniqid}",headers=headers, cookies=cookie_jar ).json()
        meta = {
-        "story": user_id_req,
+        "story": user_id_req_response,
         "uniqid":uniqid,
         "account": is_priv,
+        "username": proxy_username,
        }   
     if target[:32] == "https://www.youtube.com/watch?v=" or target[:31] == "https://www.youtube.com/shorts/" or target[:27] == "https://youtube.com/shorts/" or target[:17] == "https://youtu.be/" or target[:29] == "https://www.youtube.com/live/": 
     
