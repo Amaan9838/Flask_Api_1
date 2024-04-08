@@ -203,7 +203,7 @@ def scrap_reels():
 @application.route("/story", methods = ["GET"])
 @cache.cached(timeout=87000, key_prefix=lambda: request.full_path)
 def reels():
-    a = {"csrftoken":"JIzYAn9hVRjoDdNIQnLsqFCoVouO1WMC","sessionid":"53168773914%3AD0YRVq8KvrDZCf%3A15%3AAYeyRlmOZf2XHeCEuLrRfccq-JNAPqUO9PMiBSRIsA"}#rocky__8081  Ashar123
+    a = {"csrftoken":"ia63PdOEL5yBWKptHyzH2wGSJFagn13J","sessionid":"53168773914%3Ag3FIVbLkI0KtUe%3A18%3AAYddIlTMygtxWGqkeWSUIH8xTikIa2Nfe1Pexiahkg"}#rocky__8081  Ashar123
     b =  {"csrftoken":"1jwyJ5QczmCIva5ROe2OOj8opDwazXL3","sessionid":"36744979802%3AmISFYgnEY22rzr%3A20%3AAYc4E5uksgDF77ikhfeHkkTbGplkf92-acsJYzzptQ"} #farzi_kalosxyz  246800
     d =  {"csrftoken":"dv7osDMXDhLX2lTOsbPPnQ4gBNDPsG3O","sessionid":"58499749216%3AnDhC7Z4zEP6AWi%3A17%3AAYeZCANvuq3KMl40YjQNMB_GLZS5VkIKpGmVO_BqtQ"} #amsterdam34158 Amaan@123
     e =  {"csrftoken":"A6ledrZ83DJGCvmDYfF3vTIHQG1LOaCJ","sessionid":"53168773914%3Aafljno0aL18bpZ%3A23%3AAYcQfhhvaU7HHcy3YwKtp0x5bUbznwbsyqeKNMtYvw"}   #farzi_kalosxyz 246800
@@ -245,7 +245,7 @@ def reels():
     pr_oxy = [0]
     index = random.choice(pr_oxy)
     proxyDict = {"http" : proxies[index], "https" : proxies[index]}
-    c= [a,e,f,g]
+    c= [a]
     cookie_jar = random.choice(c)
     headers = {
             "user-agent": "Mozilla/5.0 (Linux; Android 8.1.0; motorola one Build/OPKS28.63-18-3; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/70.0.3538.80 Mobile Safari/537.36 Instagram 72.0.0.21.98 Android (27/8.1.0; 320dpi; 720x1362; motorola; motorola one; deen_sprout; qcom; pt_BR; 132081645)"
@@ -598,7 +598,7 @@ def reels():
 @application.route("/audio", methods = ["GET"])
 @cache.cached(timeout=87000, key_prefix=lambda: request.full_path)
 def audio():
-    a = {"csrftoken":"JIzYAn9hVRjoDdNIQnLsqFCoVouO1WMC","sessionid":"53168773914%3AD0YRVq8KvrDZCf%3A15%3AAYeyRlmOZf2XHeCEuLrRfccq-JNAPqUO9PMiBSRIsA"}#rocky__8081  Ashar123
+    a = {"csrftoken":"ia63PdOEL5yBWKptHyzH2wGSJFagn13J","sessionid":"53168773914%3Ag3FIVbLkI0KtUe%3A18%3AAYddIlTMygtxWGqkeWSUIH8xTikIa2Nfe1Pexiahkg"}#rocky__8081  Ashar123
     b =  {"csrftoken":"1jwyJ5QczmCIva5ROe2OOj8opDwazXL3","sessionid":"36744979802%3AmISFYgnEY22rzr%3A20%3AAYc4E5uksgDF77ikhfeHkkTbGplkf92-acsJYzzptQ"} #farzi_kalosxyz  246800
     d =  {"csrftoken":"dv7osDMXDhLX2lTOsbPPnQ4gBNDPsG3O","sessionid":"58499749216%3AnDhC7Z4zEP6AWi%3A17%3AAYeZCANvuq3KMl40YjQNMB_GLZS5VkIKpGmVO_BqtQ"} #amsterdam34158 Amaan@123
     e =  {"csrftoken":"A6ledrZ83DJGCvmDYfF3vTIHQG1LOaCJ","sessionid":"53168773914%3Aafljno0aL18bpZ%3A23%3AAYcQfhhvaU7HHcy3YwKtp0x5bUbznwbsyqeKNMtYvw"}   #farzi_kalosxyz 246800
@@ -640,7 +640,7 @@ def audio():
     pr_oxy = [0]
     index = random.choice(pr_oxy)
     proxyDict = {"http" : proxies[index], "https" : proxies[index]}
-    c= [a,e,f,g]
+    c= [a]
     cookie_jar = random.choice(c)
     headers = {
             "user-agent": "Mozilla/5.0 (Linux; Android 8.1.0; motorola one Build/OPKS28.63-18-3; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/70.0.3538.80 Mobile Safari/537.36 Instagram 72.0.0.21.98 Android (27/8.1.0; 320dpi; 720x1362; motorola; motorola one; deen_sprout; qcom; pt_BR; 132081645)"
