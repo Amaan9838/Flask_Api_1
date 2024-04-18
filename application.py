@@ -245,16 +245,20 @@ def reels():
     pr_oxy = [0]
     index = random.choice(pr_oxy)
     proxyDict = {"http" : proxies[index], "https" : proxies[index]}
-    c= [d]
+    c= [a]
     cookie_jar = random.choice(c)
+    source = request.args["source"] 
+    target = format(source)
     headers = {
-            "user-agent": "Mozilla/5.0 (Linux; Android 8.1.0; motorola one Build/OPKS28.63-18-3; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/70.0.3538.80 Mobile Safari/537.36 Instagram 72.0.0.21.98 Android (27/8.1.0; 320dpi; 720x1362; motorola; motorola one; deen_sprout; qcom; pt_BR; 132081645)"
+            "Host": "www.instagram.com",
+            "Origin": "https://www.instagram.com",
+            "Referer": target,
+            "user-agent": "Mozilla/5.0 (Linux; Android 8.1.0; motorola one Build/OPKS28.63-18-3; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/70.0.3538.80 Mobile Safari/537.36 Instagram 72.0.0.21.98 Android (27/8.1.0; 320dpi; 720x1362; motorola; motorola one; deen_sprout; qcom; pt_BR; 132081645)",
+
          }
     csrf_token = cookie_jar["csrftoken"]
     session_id = cookie_jar["sessionid"]
-     
-    source = request.args["source"] 
-    target = format(source)
+
     if target[:34] == "https://www.instagram.com/stories/" : 
       while True:
          cut_s = target[34:]
@@ -640,16 +644,19 @@ def audio():
     pr_oxy = [0]
     index = random.choice(pr_oxy)
     proxyDict = {"http" : proxies[index], "https" : proxies[index]}
-    c= [d]
+    c= [a]
     cookie_jar = random.choice(c)
+    source = request.args["source"] 
+    target = format(source)
     headers = {
+            "Host": "www.instagram.com",
+            "Origin": "https://www.instagram.com",
+            "Referer": target,
             "user-agent": "Mozilla/5.0 (Linux; Android 8.1.0; motorola one Build/OPKS28.63-18-3; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/70.0.3538.80 Mobile Safari/537.36 Instagram 72.0.0.21.98 Android (27/8.1.0; 320dpi; 720x1362; motorola; motorola one; deen_sprout; qcom; pt_BR; 132081645)"
          }
     csrf_token = cookie_jar["csrftoken"]
     session_id = cookie_jar["sessionid"]
      
-    source = request.args["source"] 
-    target = format(source)
     if target[:34] == "https://www.instagram.com/stories/" :
       cut_s = target[34:]
       separator = "/"
