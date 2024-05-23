@@ -203,7 +203,7 @@ def scrap_reels():
 @application.route("/story", methods = ["GET"])
 @cache.cached(timeout=87000, key_prefix=lambda: request.full_path)
 def reels():
-    a = {"csrftoken":"IeiyedZURvhyGjwv4Hi8hw9NkYMghmD9","sessionid":"53168773914%3A31SZWcwQuWSTVU%3A16%3AAYdERBgff43XixOAbHUiDxyko-_T_gqOkvT6kOXlQw"}#rocky__8081  Ashar123
+    a = {"csrftoken":"w1zamWBnfA7ITNmSQAI8do8CLdAMRZqO","sessionid":"53168773914%3AKtUODR2mdpDLko%3A22%3AAYf9xdSMzt1NYnw3kaPjFfLCdz_F4XO_ssMOvJkGDg"}#rocky__8081  Ashar123
     b =  {"csrftoken":"1jwyJ5QczmCIva5ROe2OOj8opDwazXL3","sessionid":"36744979802%3AmISFYgnEY22rzr%3A20%3AAYc4E5uksgDF77ikhfeHkkTbGplkf92-acsJYzzptQ"} #farzi_kalosxyz  246800
     d =  {"csrftoken":"qwykHEl2NLWx7WMx0zvfl2SPMyeuyzt7","sessionid":"58499749216%3AkSPw4nLfRK4cbu%3A16%3AAYcLiiYD3HHBuBQcZ_jRNkeV5JmtBbJooIBBmNTT0w"} #amsterdam34158 Ammu123
     e =  {"csrftoken":"A6ledrZ83DJGCvmDYfF3vTIHQG1LOaCJ","sessionid":"53168773914%3Aafljno0aL18bpZ%3A23%3AAYcQfhhvaU7HHcy3YwKtp0x5bUbznwbsyqeKNMtYvw"}   #farzi_kalosxyz 246800
@@ -602,7 +602,7 @@ def reels():
 @application.route("/audio", methods = ["GET"])
 @cache.cached(timeout=87000, key_prefix=lambda: request.full_path)
 def audio():
-    a = {"csrftoken":"IeiyedZURvhyGjwv4Hi8hw9NkYMghmD9","sessionid":"53168773914%3A31SZWcwQuWSTVU%3A16%3AAYdERBgff43XixOAbHUiDxyko-_T_gqOkvT6kOXlQw"}#rocky__8081  Ashar123
+    a = {"csrftoken":"w1zamWBnfA7ITNmSQAI8do8CLdAMRZqO","sessionid":"53168773914%3AKtUODR2mdpDLko%3A22%3AAYf9xdSMzt1NYnw3kaPjFfLCdz_F4XO_ssMOvJkGDg"}#rocky__8081  Ashar123
     b =  {"csrftoken":"1jwyJ5QczmCIva5ROe2OOj8opDwazXL3","sessionid":"36744979802%3AmISFYgnEY22rzr%3A20%3AAYc4E5uksgDF77ikhfeHkkTbGplkf92-acsJYzzptQ"} #farzi_kalosxyz  246800
     d =  {"csrftoken":"qwykHEl2NLWx7WMx0zvfl2SPMyeuyzt7","sessionid":"58499749216%3AkSPw4nLfRK4cbu%3A16%3AAYcLiiYD3HHBuBQcZ_jRNkeV5JmtBbJooIBBmNTT0w"} #amsterdam34158 Ammu123
     e =  {"csrftoken":"A6ledrZ83DJGCvmDYfF3vTIHQG1LOaCJ","sessionid":"53168773914%3Aafljno0aL18bpZ%3A23%3AAYcQfhhvaU7HHcy3YwKtp0x5bUbznwbsyqeKNMtYvw"}   #farzi_kalosxyz 246800
